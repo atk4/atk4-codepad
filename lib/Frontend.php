@@ -8,6 +8,9 @@ class Frontend extends ApiFrontend {
 		// Keep this if you are going to use database on all pages
 		//$this->dbConnect();
 
+		$this->dbConnect();
+
+
 		// This will add some resources from atk4-addons, which would be located
         // in atk4-addons subdirectory.
 		$this->addLocation('atk4-addons',array(
@@ -21,6 +24,10 @@ class Frontend extends ApiFrontend {
 		// A lot of the functionality in Agile Toolkit requires jUI
 		$this->add('jUI');
 
+		$p=explode('_',$this->page);
+		$this->add('Button')->set('View source')->addStyle('float','right')
+			->js('click')
+			->univ()->redirect('source/'.$p[0]);
 		// Initialize any system-wide javascript libraries here
         // If you are willing to write custom JavaScritp code,
         // place it into templates/js/atk4_univ_ext.js and
@@ -49,11 +56,7 @@ class Frontend extends ApiFrontend {
 		// it and place in a separate class
 		$m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('Welcome','index');
-		$m->addMenuItem('How Do I..?','how');
-		$m->addMenuItem('Database Test','dbtest');
-		$m->addMenuItem('Auth test','authtest');
 		$m->addMenuItem('about');
-		$m->addMenuItem('logout');
 
 		// If you want to use ajax-ify your menu
 		// $m->js(true)->_load('ui.atk4_menu')->atk4_menu(array('content'=>'#Content'));

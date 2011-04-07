@@ -5,15 +5,6 @@ class page_index extends Page {
         $p=$this;
 
 
-        // Paste some code here for quick-start
-
-        $p->add('Button')
-            ->js('click')->univ()
-            ->alert('JavaScript / jQuery / Univ Works!');
-
-
-
-
     }
 
     function defaultTemplate(){
