@@ -13,7 +13,13 @@ class Frontend extends ApiFrontend {
 
 		// This will add some resources from atk4-addons, which would be located
         // in atk4-addons subdirectory.
-		$this->addLocation('atk4-addons',array(
+		$this->api->stickyGET('b');
+		if($_GET['b']=='devel'){
+			$dir='atk4-1-addons';
+		}else{
+			$dir='atk4-addons';
+		}
+		$this->addLocation($dir,array(
 					'php'=>array(
                         'mvc',
 						'misc/lib',
