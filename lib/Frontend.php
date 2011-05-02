@@ -39,6 +39,7 @@ class Frontend extends ApiFrontend {
         // place it into templates/js/atk4_univ_ext.js and
         // include it here
 		$this->js()
+			->_load('ui.atk4_notify')
 			->_load('atk4_univ')
 			// ->_load('ui.atk4_expander')
 			;

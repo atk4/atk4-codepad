@@ -1,0 +1,14 @@
+<?headers?>
+<?/headers?>
+<?subject?>Product Purchase Confirmation<?/?>
+<?body?>
+
+Hi <?$name?>
+
+Thank you for purchasing <?$product?>. 
+
+To receive support you should register by clicking on the following link:
+<?$link?>
+
+<?$sign?>
+<?/body?>
