@@ -21,7 +21,7 @@ class Frontend extends ApiFrontend {
         $this->redirect('http://agiletoolkit.org/doc/');
     }
     function initLayout(){
-        $toolbox=$this->add('Toolbox',null,'Toolbox');
+        $toolbox=$this->add('Inspector',null,'Toolbox');
         parent::initLayout();
 
         $toolbox->initButtons();

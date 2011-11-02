@@ -1,5 +1,6 @@
 <?php
-class Toolbox extends View {
+  
+class Inspector extends View {
     function initButtons(){
         $page=$this->api->page_object;
 
@@ -27,7 +28,8 @@ class Toolbox extends View {
         if(($t=$page->defaultTemplate())!=array('page') && is_array($t)){
             $source->add('Button')->set('Page template')
                 ->js('click')
-                ->univ()->frameURL('Page Source',$this->api->getDestinationURL(null,array('pagetemplate'=>true)));
+                ->univ()->frameURL('Page Source',$this->api->getDestinationURL(null,array('pagetemplate'=>true)
+                            ),array('height'=>'700'));
             if($_GET['pagetemplate']){
                 $this->api->renderOnly($this->add('SourceViewer')->load('template',$t[0].'.html'));
             }
@@ -36,6 +38,22 @@ class Toolbox extends View {
         $source->add('H3')->set('Component Sources');
         $node=$source->add('TreeNode')->useObject($page);
         $this->showChildren($page,$node);
+
+        $source->add('HR');
+        $source->add('Button')->set('Inspector Source')
+            ->js('click')
+            ->univ()->frameURL('Inspector Source',$this->api->getDestinationURL(null,array('inspectorsrc'=>true)
+                            ),array('height'=>'700'));
+        if($_GET['inspectorsrc']){
+            $this->api->renderOnly($this->add('SourceViewer')->load('php','Inspector.php'));
+        }
+        $source->add('Button')->set('Source Viewer\'s Source')
+            ->js('click')
+            ->univ()->frameURL('Source Viewer\'s Source',$this->api->getDestinationURL(null,array('sourceviewsrc'=>true)
+                            ),array('height'=>'700'));
+        if($_GET['sourceviewsrc']){
+            $this->api->renderOnly($this->add('SourceViewer')->load('php','SourceViewer.php'));
+        }
     }
     function showChildren($sorc,$dest){
         foreach($sorc->elements as $key=>$obj){
@@ -55,7 +73,7 @@ class TreeNode extends View {
         if($obj instanceof Page){
             $this->js('click')->_selector('#'.$this->name.'_a')
                 ->univ()->frameURL('Page Source',$this->api->getDestinationURL(null,array('source'=>true)
-                        ),array('height'=>'700'));
+                            ),array('height'=>'700'));
             if($_GET['source']){
                 $p=explode('_',$this->api->page);
                 $this->api->renderOnly($this->add('SourceViewer')->load('page',$p[0].'.php'));
