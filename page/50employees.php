@@ -1,5 +1,7 @@
 <?php
 class page_50employees extends Page {
+    public $descr='The other day I got asked: "I have lots of employees to enter. What\'s the fastest name to enter them?".
+        We can certainly build a form with lots of fields and the make it produce many records when it\'s submitted.';
 	function init(){
 		parent::init();
 
@@ -28,23 +30,4 @@ class page_50employees extends Page {
 	}
 }
 
-class Controller_Employee extends Controller {
-	public $model_name='Model_Employee';
-}
 
-class Model_Employee extends Model_Person {
-	function defineFields(){
-		parent::defineFields();
-
-		$this->addField('name')
-			->mandatory(true);
-
-		$this->addField('days_worked')
-			->system(true)
-			->datatype('int');
-
-		$this->addField('salary')
-			->mandatory(true)
-			->datatype('money');
-	}
-}

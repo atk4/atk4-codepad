@@ -1,5 +1,8 @@
 <?php
 class page_newsletter extends Page {
+    public $descr='Example demonstrates how to build a simple 2-step newsletter subscription form. Form is using AJAX to load
+        second step and is then using built-in notification engine to display success message with data combined from both
+        steps';
 	function page_index(){
 		$this->add('H1')->set('Step 1');
 		$form=$this->add('Form');

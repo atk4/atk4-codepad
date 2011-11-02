@@ -1,5 +1,7 @@
 <?php
 class page_reloadtest extends Page {
+    public $descr='Ilustrates how you can reload parts of the page either using reload() or form/reloadField';
+
 	function init(){
 		parent::init();
 		$p=$this;
@@ -12,6 +14,7 @@ class page_reloadtest extends Page {
 		$g->addColumn('text','name');
 		$g->addColumn('text','surname');
 		$g->setSource('user');
+        if($_GET['g'])$g->dq->where('gender',$_GET['g']);
 
 		$g->addButton('Male')->js('click',$g->js()->reload(array('g'=>'M')));
 		$g->addButton('Female')->js('click',$g->js()->reload(array('g'=>'F')));

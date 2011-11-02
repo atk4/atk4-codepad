@@ -1,5 +1,6 @@
 <?php
 class page_hybrid extends Page {
+    public $descr='Demonstration of Hybrid forms, which allow to encorporate different styles throughout the same form.';
 	function init(){
 		parent::init();
 		$page=$this;

@@ -1,10 +1,13 @@
 <?php
 class page_autocomplete extends Page {
+    public $descr='Selecting element in autocomplete field then editing loaded data (or creating new one if it wasn\'t
+            selected can be implemented by using two forms. The first form only allows you to change the name of the record,
+            then it submits itself and reloads second form.';
     function init(){
         parent::init();
 
         $form=$this->add('Form');
-        $name=$form->addField('autocomplete','name')->setModel('Employee');
+        $name=$form->addField('autocomplete','name','Employee')->setModel('Employee');
         $form->getElement('name')->js('change',$form->js()->submit());
 
         $form2=$this->add('MVCForm');
@@ -20,20 +23,4 @@ class page_autocomplete extends Page {
             $form2->js()->reload(array('id'=>$form->get('name')))->execute();
         }
     }
-}
-class Model_Employee extends Model_Person {
-	function defineFields(){
-		parent::defineFields();
-
-		$this->addField('name')
-			->mandatory(true);
-
-		$this->addField('days_worked')
-			->system(true)
-			->datatype('int');
-
-		$this->addField('salary')
-			->mandatory(true)
-			->datatype('money');
-	}
 }

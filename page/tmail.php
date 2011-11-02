@@ -1,5 +1,6 @@
 <?php
 class page_tmail extends Page {
+    public $skip=true;
 	function init(){
 		parent::init();
 

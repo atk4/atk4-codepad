@@ -1,5 +1,9 @@
 <?php
 class page_dragaction extends Page {
+    public $descr='Using custom view with a custom template to display your own HTML and even enable drag and drop. Agile
+        Toolkit helps you even if you build your own components. Here we also specify a custom JavaScript which uses
+        univ().ajaxec() to send data back to the server.';
+
 	function init(){
 		parent::init();
 
@@ -15,6 +19,7 @@ class page_dragaction extends Page {
 				array( 'id'=>1, 'name'=>'John'), 
 				array( 'id'=>2, 'name'=>'Peter'), 
 				array( 'id'=>3, 'name'=>'Jojo'), 
+				array( 'id'=>4, 'name'=>'Kevin'), 
 				);
 		$tasks=array(
 				array( 'id'=>3, 'name'=>'Write Report'), 
@@ -23,10 +28,10 @@ class page_dragaction extends Page {
 				);
 
 
-		$left=$this->add('Person',null,'People','People')
+		$left=$this->add('PersonList',null,'People','People')
 			->setStaticSource($people);
 
-		$right=$this->add('Task',null,'Tasks','Tasks')
+		$right=$this->add('TaskList',null,'Tasks','Tasks')
 			->setStaticSource($tasks);
 
 		$right->js(true)->children('div')->draggable();
@@ -57,15 +62,4 @@ class page_dragaction extends Page {
 	function defaultTemplate(){
 		return array('page/dragaction');
 	}
-}
-
-class Task extends MVCLister {
-	function formatRow(){
-		$id=$this->current_row['id'];
-
-		$this->current_row['allocated']=print_r($this->owner->allocated[$id],true);
-	}
-}
-
-class Person extends MVCLister {
 }

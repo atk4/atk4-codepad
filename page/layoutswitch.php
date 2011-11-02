@@ -1,5 +1,8 @@
 <?php
 class page_layoutswitch extends Page {
+    public $descr='Changing template of an object based on conditions. Function defaultTemplate() is called before init() but
+        you can put some code in there if you want to switch between templates conditionally. Additionally in this example I
+        have added a cool effect when the page is being re-loaded';
 	function init(){
 		parent::init();
 		$this->js(true)->show('slide');
