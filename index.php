@@ -10,11 +10,11 @@
 // agile_project - this is realm. It should be unique per-project
 // jui - this is theme. Keep it jui unless you want to make your own theme
 
-if($_GET['b']=='devel'){
-	include 'atk4-1/loader.php';
-}else{
+if($_GET['b']=='4.0'){
 	include 'atk4/loader.php';
+}else{
+	include 'atk4-1/loader.php';
 }
-$api=new Frontend('sample_project','jui');
+$api=new Frontend('sample_project',$_GET['b']=='4.1'?'jui':'default');
 $api->main();
 ?>

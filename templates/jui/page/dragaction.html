@@ -1,0 +1,34 @@
+<div id="<?$_name?>">
+Hello. 
+
+<?$Content?>
+
+<table width="100%">
+<tr><td width="50%">
+<?People?>
+<div id="<?$_name?>" style="border-right: 1px dashed black">
+<?rows?><?row?>
+ <div data-id="<?$id?>" id="<?$_name?>" style="border: 1px solid red; margin: 2em">
+   <h4>Person: <?$name?> (id: <?$id?>)</h4>
+   <p>Drag tasks into me!</p>
+
+ </div>
+ <?/row?><?/rows?>
+</div>
+<?/?>
+</td><td width="50%">
+<?Tasks?>
+<div id="<?$_name?>">
+<?rows?><?row?>
+ <div data-id="<?$id?>" id="<?$_name?>" style="border: 1px solid red; margin: 2em">
+   <h4>Task: <?$name?> (id:<?$id?>)</h4>
+   <p>Drag me!</p>
+
+   <p>Allocated To: <?$allocated?></p>
+ </div>
+ <?/row?><?/rows?>
+</div>
+<?/?>
+</td></tr></table>
+
+</div>

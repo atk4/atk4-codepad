@@ -14,10 +14,10 @@ class Frontend extends ApiFrontend {
 		// This will add some resources from atk4-addons, which would be located
         // in atk4-addons subdirectory.
 		$this->api->stickyGET('b');
-		if($_GET['b']=='devel'){
-			$dir='atk4-1-addons';
-		}else{
+		if($_GET['b']=='4.0'){
 			$dir='atk4-addons';
+		}else{
+			$dir='atk4-1-addons';
 		}
 		$this->addLocation($dir,array(
 					'php'=>array(
@@ -75,7 +75,9 @@ class Frontend extends ApiFrontend {
 
         // You need to call initLayout which will determine current page and load
         // respective page/...php class.
-        $this->initLayout();
+		if($_GET['b']=='4.0'){
+			$this->initLayout();
+		}
 	}
 
 	function page_pref($p){
