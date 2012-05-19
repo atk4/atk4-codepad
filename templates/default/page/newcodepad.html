@@ -1,36 +1,48 @@
-<h1>Basic example for Grid</h1>
-<p>Grid in Agile Toolkit is used to display column data. It is based on HTML table and allows you to define which rows you would like to have.</p>
 
-<ul>
-  <li><a href="#">Beginner introduction to Grid</a></li>
-  <li><a href="#">Full Grid Documentation</a></li>
-  <li><a href="#">Class Reference for Grid_Basic</a></li>
-</ul>
+<h1>The Job: a "Slot Machine"</h1>
+<p>Imagine a client, who shows up and wants to put your skills to the test by asking you to develop a simple "slot machine". The client is not yet sure of what he needs, but he says he'll figure it out once he gets his hands on a first prototype. His requirements is to make a web page display 3 random digits to the visitor.</p>
+<p>"Simple enough", you say, and write some HTML for this curious task - putting it into templates/default/view/slotmachine.html</p>
 
-
-<h2>Example</h2>
-<div class="example"><?Execute?>
+<div class="example">
+	<div class="label">Source</div>
+<?Execute?>
 $grid=$page->add('Grid');
 $grid->addColumn('name');
 $grid->addColumn('surname');
-
 $grid->setModel('People');
 <?/?></div>
-
-<h2>Code</h2>
-<div class="code">
-<pre>
-$g=$p->add('Grid');
-$g->addColumn('name');
-$g->addColumn('surname');
-
-$g->setModel('People');
-</pre>
+<p>Next, you need to generate random numbers and place them into the template slots. This logic should be contained inside a new class file, which must be created inside lib/View/SlotMachine.php:</p>
+<div class="example">
+	<div class="label">Source</div>
+	<div class="actions"><a href="#"><i class="ui-icon ui-icon-comment"></i>Comment</a><a href="#"><i class="ui-icon ui-icon-link"></i>Link</a><a href="#"><i class="ui-icon ui-icon-document"></i>Copy</a></div>
+    <pre class="highlight">
+class View_SlotMachine extends AbstractView {
+    function init(){
+        parent::init();
+        $this->template->set('slot1',rand(1,9));
+        $this->template->set('slot2',rand(1,9));
+        $this->template->set('slot3',rand(1,9));
+    }
+    function defaultTemplate(){
+        return array('view/slotmachine');
+    }
+}
+    </pre>
 </div>
-
-
-
-
+<div class="example" >
+	<div class="label">Source</div>
+    <pre class="highlight">
+$page->add('View_SlotMachine');
+</div>
+<div class="demo">
+	<div class="label">Demo</div>
+	 <div style="background: white; padding: 3px; margin: 5px; border: 2px solid black; width: 100px">
+	   Slot Machine<br>
+	   <span style="margin: 4px; border: 1px solid red">7</span>
+	   <span style="margin: 4px; border: 1px solid red">7</span>
+	   <span style="margin: 4px; border: 1px solid red">4</span>
+	 </div>
+</div>
 
 
 
@@ -39,8 +51,8 @@ $g->setModel('People');
 <a href="#">View Source: "Model_People"</a>
 -->
 
-<h2>Comments<h2>
-
+<div class="comments">
+<h2>Comments</h2>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   /**
@@ -52,4 +64,4 @@ $g->setModel('People');
    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
-
+</div>
