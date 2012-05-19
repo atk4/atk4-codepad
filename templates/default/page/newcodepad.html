@@ -8,18 +8,17 @@
 </ul>
 
 
-<h3>Simple use of Grid</h3>
-
-<?Execute?>
+<h2>Example</h2>
+<div class="example"><?Execute?>
 $grid=$page->add('Grid');
 $grid->addColumn('name');
 $grid->addColumn('surname');
 
 $grid->setModel('People');
-<?/?>
+<?/?></div>
 
-
-<a href="#">View Example Source</a></li>
+<h2>Code</h2>
+<div class="code">
 <pre>
 $g=$p->add('Grid');
 $g->addColumn('name');
@@ -27,9 +26,18 @@ $g->addColumn('surname');
 
 $g->setModel('People');
 </pre>
+</div>
 
-<a href="#">View Source: "Model_People"</a></li>
 
+
+
+
+
+
+<!--
+<a href="#">View Example Source</a>
+<a href="#">View Source: "Model_People"</a>
+-->
 
 <h2>Comments<h2>
 

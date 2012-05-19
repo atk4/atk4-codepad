@@ -1328,18 +1328,18 @@ input.ui-button,
   padding: 0;
   list-style-type: none;
 }
-#main {
+.main {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
-#sidebar ul,
-#sidebar ul li {
+.sidebar ul,
+.sidebar ul li {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-#sidebar {
+.sidebar {
   border: 1px solid #cad1d9;
   background: #ecf3f9;
   /*
@@ -1359,25 +1359,29 @@ input.ui-button,
 */
 
 }
-#sidebar ul li a {
+.sidebar ul li a {
   text-decoration: none;
   font-size: 13px;
   display: block;
   padding: 5px 30px;
 }
-#sidebar ul li a:hover {
+.sidebar ul li a:hover {
   background: #e1eaf2;
 }
-#sidebar ul li.current a {
+.sidebar ul li.current a {
   background: #fff;
   color: #000;
   cursor: default;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-top: 1px solid #cad1d9;
+  border-bottom: 1px solid #cad1d9;
 }
-#sidebar > ul > li {
+.sidebar > ul > li {
   border-bottom: 1px solid #c3ced9;
   border-top: 1px solid #fff;
 }
-#sidebar > ul > li > a {
+.sidebar > ul > li > a {
   font-size: 10px !important;
   font-weight: bold;
   text-transform: uppercase;
@@ -1410,19 +1414,19 @@ input.ui-button,
   /* IE9 and down */
 
 }
-#sidebar > ul > li > a i {
+.sidebar > ul > li > a i {
   float: left;
   margin-right: 2px;
 }
-#main {
+.main {
   width: 100%;
   background: #fff;
 }
-#sidebar {
+.sidebar {
   width: 20%;
   max-width: 220px;
 }
-#content-w-sidebar {
+.content-w-sidebar {
   width: 80%;
   border: 1px solid #cad1d9;
   border-left: none;
