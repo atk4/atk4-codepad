@@ -1,2 +1,47 @@
-      <h1>Example</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<h1>Basic example for Grid</h1>
+<p>Grid in Agile Toolkit is used to display column data. It is based on HTML table and allows you to define which rows you would like to have.</p>
+
+<ul>
+  <li><a href="#">Beginner introduction to Grid</a></li>
+  <li><a href="#">Full Grid Documentation</a></li>
+  <li><a href="#">Class Reference for Grid_Basic</a></li>
+</ul>
+
+
+<h3>Simple use of Grid</h3>
+
+<?Execute?>
+$grid=$page->add('Grid');
+$grid->addColumn('name');
+$grid->addColumn('surname');
+
+$grid->setModel('People');
+<?/?>
+
+
+<a href="#">View Example Source</a></li>
+<pre>
+$g=$p->add('Grid');
+$g->addColumn('name');
+$g->addColumn('surname');
+
+$g->setModel('People');
+</pre>
+
+<a href="#">View Source: "Model_People"</a></li>
+
+
+<h2>Comments<h2>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://atkdemos.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
