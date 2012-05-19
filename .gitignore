@@ -6,3 +6,5 @@ config.php
 upload
 distfiles
 .DS_Store
+atk4
+atk4-addons
