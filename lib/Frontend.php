@@ -13,7 +13,8 @@ class Frontend extends ApiFrontend {
 
 		$this->add('jUI');
 
-		$m=$this->add('View',null,'SubMenu',array('submenu'));
+        $this->add('TreeView',null,'SubMenu',array('submenu'))
+            ->setModel('Menu');
 	}
     function page_back($p){
         $this->redirect('http://agiletoolkit.org/doc/');
