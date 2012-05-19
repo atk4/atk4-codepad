@@ -58,6 +58,7 @@ class Inspector extends View {
     function showChildren($sorc,$dest){
         foreach($sorc->elements as $key=>$obj){
             if($obj instanceof jQuery_Chain)continue;
+            if(!is_object($obj))continue;
             $node=$dest->add('TreeNode')->useObject($obj);
             if($obj->elements)$this->showChildren($obj,$node);
         }
@@ -68,6 +69,7 @@ class Inspector extends View {
 }
 class TreeNode extends View {
     function useObject($obj){
+        if(!is_object($obj))throw $this->exception('not object');
         $this->template->set('name',$obj->name);
         $this->template->set('class',get_class($obj));
         if($obj instanceof Page){

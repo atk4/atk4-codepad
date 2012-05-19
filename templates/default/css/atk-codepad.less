@@ -1,0 +1,31 @@
+@import "atk-main.less";
+
+.clearul {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+
+#main {
+	.box-shadow(0 1px 3px rgba(0,0,0,0.15));
+	border:1px solid #e1e7ed;
+}
+
+#sidebar ul, #sidebar ul li {.clearul;}
+
+#sidebar {
+	border-right:1px solid #e1e7ed;
+	background:#f5f7fa;
+	ul {
+		a, span {
+			text-decoration:none;padding:10px;display:block;
+			&.ui-widget-header {color:#fff;font-size:11px;text-transform:uppercase;padding:3px 10px;}
+		}
+	}
+}
+
+
+#main {width:100%;background:#fff;}
+#sidebar {width:20%;max-width:220px;}
+#content-w-sidebar {width:80%;}
+.inner {padding:@padding;}

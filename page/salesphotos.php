@@ -44,7 +44,9 @@ class Model_Sales extends SomeModel {
 }
 class Model_Sections extends SomeModel {
 }
+if(!class_exists('Grid',false)){
 class Grid extends Grid_Basic {
     function format_referenece(){
     }
+}
 }
