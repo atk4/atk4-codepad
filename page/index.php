@@ -21,7 +21,7 @@ class page_index extends Page {
             include_once($path);
             $c=new $class;
             if(isset($c->skip))continue;
-            $row['descr']=preg_replace('/([\.\?]).*/s','$1',$c->descr);
+            $row['descr']=preg_replace('/([\.\?]).*/s','$1',@$c->descr);
             $data[]=$row;
         }
 

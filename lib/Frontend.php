@@ -13,19 +13,23 @@ class Frontend extends ApiFrontend {
 
 		$this->add('jUI');
 
+        /*
 		$m=$this->add('Menu',null,'Menu');
 		$m->addMenuItem('Index','index');
 		$m->addMenuItem('Back to Agile Toolkit','back');
+         */
 	}
     function page_back($p){
         $this->redirect('http://agiletoolkit.org/doc/');
     }
     function initLayout(){
-        $toolbox=$this->add('Inspector',null,'Toolbox');
         parent::initLayout();
+        /*
+        $toolbox=$this->add('Inspector');
 
         $toolbox->initButtons();
 
+         */
 
     }
 }
