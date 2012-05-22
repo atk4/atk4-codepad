@@ -21,6 +21,9 @@ class Frontend extends ApiFrontend {
     }
     function initLayout(){
         parent::initLayout();
+        $page=$this->page_object;
+        $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a); });
+
         /*
         $toolbox=$this->add('Inspector');
 

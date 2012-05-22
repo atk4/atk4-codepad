@@ -1,0 +1,51 @@
+<h1>Basic Form Example</h1>
+
+<p>Form is a fundamental component of any web application. Agile Toolkit greatly simplifies form creation.</p>
+
+<?Example?>
+$form=$page->add('Form');
+$form->addField('line','name');
+$form->addField('line','surname');
+$form->addSubmit();
+
+if($form->isSubmitted()){
+  $form->js()->univ()->alert('Thank you, '.
+    $form->get('name').' '.$form->get('surname'))->execute();
+}
+<?/?>
+
+<h3>Form Elements</h3>
+
+<p>There are many field types you can use with form. In addition you can add your own field types or use add-on which may provide additional types.</p>
+
+
+<?Example?>
+$form=$page->add('Form');
+$form->addComment('This form shows all sorts of fields you can use by default');
+$form->addField('line','line');
+$form->addField('password','password');
+$form->addField('checkbox','checkbox');
+$form->addField('dropdown','dropdown');
+$form->addField('checkboxlist','checkboxlist');
+$form->addField('radio','radio');
+$form->addField('DatePicker','date');
+$form->addField('text','text');
+
+$form->addSeparator();
+$form->addField('Slider','Slider');
+$form->addField('upload','upload');
+
+$form->addSeparator('Here are some variations in how you can use fields');
+$form->addField('Search','Search');
+$form->addSubmit();
+<?/?>
+
+<h3>Use with Model</h3>
+
+<p>The most convenient way to use form is to have it's fields populated from a Model.</p>
+
+
+<?Example?>
+$form=$page->add('Form');
+$form->setModel('Employee');
+<?/?>

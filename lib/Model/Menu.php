@@ -5,7 +5,7 @@ class Model_Menu extends hierarchy\Model_Array {
         $res=array();
         foreach($array as $key=>$row){
             $r=array(
-                'id'=>$key,
+                'page'=>$key,
                 'name'=>$row
             );
 

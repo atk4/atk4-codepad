@@ -3,9 +3,6 @@ class Model_Employee extends Model_Person {
 	function init(){
 		parent::init();
 
-		$this->addField('name')
-			->mandatory(true);
-
 		$this->addField('days_worked')
 			->system(true)
 			->datatype('int');

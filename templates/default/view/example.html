@@ -1,4 +1,12 @@
-<div style="width: 200px; float: left; border: 1px solid black; padding: 1em; margin: 0.5em ">
-<h4><a href="/<?$name?>"><?$name?></a></h4>
-<p><?$descr?></p>
+<div id="<?$_name?>_ex" class="example">
+  <div class="label">Source</div>
+  <div class="actions"><a href="#"><i class="ui-icon ui-icon-comment"></i>Comment</a><a href="#"><i class="ui-icon ui-icon-link"></i>Link</a><a href="#"><i class="ui-icon ui-icon-document"></i>Copy</a></div>
+  <pre class="highlight language-php">
+<?$Code?>
+  </pre>
+</div>
+
+<div id="<?$_name?>_de" class="demo">
+  <div class="label">Demo</div>
+  <?$Demo?>
 </div>

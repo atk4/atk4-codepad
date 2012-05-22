@@ -1,0 +1,57 @@
+<h1>Basic Grid Example</h1>
+
+<p>Grid presents data in a tabular way. Grid always has a defined set of columns. When used with model, columns will be automatically populated. Without Models you need to use addColumn() and populate data</p>
+
+<?Example?>
+$grid=$page->add('Grid');
+$grid->addColumn('name');
+$grid->addColumn('surname');
+
+$grid->setSource(array(
+  array('name'=>'John','surname'=>'Smith'.rand(1,20)),
+  array('name'=>'Peter','surname'=>'Tester'.rand(20,40))
+));
+<?/?>
+
+<h3>Grid Buttons</h3>
+
+<p>Grid has support for buttons. addButton() is merely a wrapper out of convenience. You can add button into any view.</p>
+
+<?Example?>
+$grid=$page->add('Grid');
+
+$grid->addColumn('name');
+$grid->addColumn('surname');
+
+$grid->setSource(array(
+  array('name'=>'John','surname'=>'Smith'.rand(1,20)),
+  array('name'=>'Peter','surname'=>'Tester'.rand(20,40))
+));
+
+$grid->addButton('One');
+$grid->addButton('Two')->js('click')->univ()->alert('clicked button two');
+$grid->addButton('Reload Grid')->js('click',$grid->js()->reload());
+$grid->addButton('With Icon')->setIcon('heart');
+<?/?>
+
+<h3>Grid from Model</h3>
+
+<p>The most typical use is when grid is being populated through a Model.</p>
+
+<?Example?>
+$grid=$page->add('Grid');
+
+$grid->setModel('Employee');
+<?/?>
+
+<h3>Paginator and Quicksearch</h3>
+
+<p>The most typical use is when grid is being populated through a Model.</p>
+
+<?Example?>
+$grid=$page->add('Grid');
+
+$grid->setModel('Employee');
+$grid->addPaginator(3);
+$grid->addQuickSearch(array('name'));
+<?/?>

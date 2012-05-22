@@ -1,0 +1,27 @@
+<h1>Binding JavaScript Events</h1>
+
+<p>Binding allows you to modify behaviour through JavaScript / jQuery events</p>
+
+<?Example?>
+$page->add('Button')->set('click me')->js('click')
+  ->univ()->alert('Thank you');
+
+$bs=$page->add('ButtonSet');
+
+$b1=$bs->addButton('Hide Myself');
+$b1->js('click')->hide();
+
+$b2=$bs->addButton('Hide next button');
+$b3=$bs->addButton('Hide prev button');
+$b2->js('click',$b3->js()->fadeOut('slow'));
+$b3->js('click',$b2->js()->fadeOut('slow'));
+
+$bs->addButton('Show all buttons')
+  ->js('click',array(
+    $b1->js()->show(),
+    $b2->js()->show(),
+    $b3->js()->show()
+    ));
+<?/?>
+
+

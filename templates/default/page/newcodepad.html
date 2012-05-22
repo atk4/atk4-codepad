@@ -3,14 +3,12 @@
 <p>Imagine a client, who shows up and wants to put your skills to the test by asking you to develop a simple "slot machine". The client is not yet sure of what he needs, but he says he'll figure it out once he gets his hands on a first prototype. His requirements is to make a web page display 3 random digits to the visitor.</p>
 <p>"Simple enough", you say, and write some HTML for this curious task - putting it into templates/default/view/slotmachine.html</p>
 
-<div class="example">
-	<div class="label">Source</div>
-<?Execute?>
+<?Example?>
 $grid=$page->add('Grid');
-$grid->addColumn('name');
-$grid->addColumn('surname');
-$grid->setModel('People');
-<?/?></div>
+$grid->setModel('Employee');
+<?/?>
+
+
 <p>Next, you need to generate random numbers and place them into the template slots. This logic should be contained inside a new class file, which must be created inside lib/View/SlotMachine.php:</p>
 <div class="example">
 	<div class="label">Source</div>
@@ -34,15 +32,6 @@ class View_SlotMachine extends AbstractView {
     <pre class="highlight">
 $page->add('View_SlotMachine');
 </div>
-<div class="demo">
-	<div class="label">Demo</div>
-	 <div style="background: white; padding: 3px; margin: 5px; border: 2px solid black; width: 100px">
-	   Slot Machine<br>
-	   <span style="margin: 4px; border: 1px solid red">7</span>
-	   <span style="margin: 4px; border: 1px solid red">7</span>
-	   <span style="margin: 4px; border: 1px solid red">4</span>
-	 </div>
-</div>
 
 
 
@@ -53,6 +42,7 @@ $page->add('View_SlotMachine');
 
 <div class="comments">
 <h2>Comments</h2>
+<!--
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   /**
@@ -64,4 +54,5 @@ $page->add('View_SlotMachine');
    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
+-->
 </div>
