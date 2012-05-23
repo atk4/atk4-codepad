@@ -1,0 +1,31 @@
+<h3>Splitting page into 2 columns, showing list on the left and other view on the right</h3>
+
+<?Example?>
+
+class Model_Scholar_Current extends Model_Table {
+  public $table='person';
+}
+
+$columns = $page->add('columns');
+$left = $columns->addColumn(6);
+$right = $columns->addColumn(6);
+
+
+$students = $left->add('MVCGrid');
+$students->setModel('Model_Scholar_Current');
+
+$dtbtn=$students->addColumn('button', 'student_id');
+
+if($_GET['student_id']){
+  $right->js()->reload(array(
+    'showassociated_fee'=>rand(0,1000),
+    'id'=>$_GET['student_id']
+  ))->execute();
+}
+
+if($_GET['showassociated_fee']){
+  $right->add('View')->set($_GET['showassociated_fee']);
+  $right->add('View')->set($_GET['id']);
+}
+
+       <?/?>
