@@ -1,0 +1,101 @@
+<h2>Example for Introduction to Models</h2>
+
+<p>Below is a full example as described on the <a href="http://agiletoolkit.org/learn/understand/model/intro">Introduction
+  to Models" page of "Learning Agile Toolkit" book</a>
+
+<div class="atk-row">
+  <div class="span6">
+
+<?Silent?>lib/Model/Item.php
+class Model_Item extends Model_Table {
+  public $table='item';
+  function init(){
+    parent::init();
+
+    $this->addfield('price');
+    $this->addfield('name');
+    
+    $cat = $this->leftJoin('category');
+    $cat->addField('category_name','name');
+
+
+    $this->hasMany('Order');
+    $this->hasMany('Order_Completed');
+
+    $this->addExpression('successful_orders')
+      ->set($this->refSQL('Order_Completed')
+      ->sum('amount'));
+  }
+}
+<?/?>
+
+<?Silent?>lib/Model/Item/Discounted.php
+class Model_Item_Discounted extends Model_Item {
+  function init(){
+    parent::init();
+
+    $this->addField('has_discount')->type('boolean');
+    $this->addCondition('has_discount',true);
+  }
+}
+<?/?>
+
+</div><div class="span6">
+
+<?Silent?>lib/Model/Order.php
+class Model_Order extends Model_Table {
+  public $table='order';
+  function init(){
+    parent::init();
+
+    $this->hasOne('Item');
+    $this->addField('amount')->type('int');
+    $this->addField('is_completed')->type('boolean');
+  }
+}
+<?/?>
+
+
+<?Silent?>lib/Model/Order/Completed.php
+class Model_Order_Completed extends Model_Order {
+  function init(){
+    parent::init();
+
+    $this->addCondition('is_completed',true);
+  }
+}
+<?/?>
+</div></div>
+
+<h3>Direct use of objects</h3>
+<p>The following object demostrates some of the presentation code. It manipulates existing model values without significantly changing the business logic.</p>
+
+<?ExecuteTrigger?>Sample 1
+$item = $page->add('Model_Item');
+
+$item->tryLoadAny();
+
+$item['price'] = 14.99;
+$item['name'] = 'Mouse Pad';
+
+$item->save();
+<?/?>
+
+<h3>Integration with Views</h3>
+<p>The real power of Agile Toolkit begins when you integrate models with Views.</p>
+
+<?ExecuteTrigger?>Sample 2
+$grid=$page->add('Grid');
+$grid->setModel('Item');
+
+$form = $page->add('Form');
+$form->setModel('Order_Completed');
+$form->addSubmit();
+if($form->isSubmitted()){
+  $form->update();
+  $form->js(null,$page->js()->reload())->univ()->successMessage('Order added')->execute();
+}
+
+<?/?>
+
+<a name="test"></div>

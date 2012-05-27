@@ -1,0 +1,30 @@
+<?Silent?>lib/Model/Item.php
+class Model_Item extends Model_Table {
+  public $table='item';
+  function init(){
+    parent::init();
+
+    $this->addfield('price');
+    $this->addfield('name');
+  }
+}
+<?/?>
+
+<?Silent?>Sample 1b
+$item = $htis->add('Model_Item');
+
+$item->tryLoadAny();
+
+$order = $item->ref('Order');
+
+$order['amount']=5;
+$order->save();
+
+$item->reload();
+
+$res = $item['successful_orders'];   // will increment by 5
+<?/?>
+
+<?Silent?>
+$page->api->redirect('..');
+<?/?>
