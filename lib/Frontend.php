@@ -14,8 +14,6 @@ class Frontend extends ApiFrontend {
 
 		$this->add('jUI');
 
-        $this->jui->addStaticInclude('jquery.scrollTo-min');
-
         if($this->template->hasTag('SubMenu'))
             $this->add('TreeView',null,'SubMenu',array('submenu'))
             ->setModel('Menu');
