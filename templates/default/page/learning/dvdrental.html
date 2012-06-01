@@ -1,0 +1,71 @@
+<h2>Codepad Models and Basic Admin</h2>
+
+<p>Throughout the learning book I'm referring to a DVD-rental application. The first draft of this application consists only from 4 tables and is described by the models below</p>
+
+<?Example?>
+
+// lib/Model/Customer.php
+class Model_Customer extends Model_Table {
+  public $table='customer';
+    
+  function init(){
+    parent::init();
+
+    $this->addField('name');
+  }
+}
+
+// lib/Model/DVD.php
+class Model_DVD extends Model_Table {
+  public $table='dvd';
+  function init(){
+    parent::init();
+
+    $this->addField('code');
+
+    $this->hasOne('Movie');
+  }
+}
+
+// lib/Model/Movie.php
+class Model_Movie extends Model_Table {
+  public $table='movie';
+  function init(){
+    parent::init();
+
+    $this->addField('name');
+    $this->addField('year')->type('int');
+    $this->addField('imdb')->caption('IMDB Link');
+  }
+}
+
+// lib/Model/Rental.php
+class Model_Rental extends Model_Table {
+  public $table='rental';
+  function init(){
+    parent::init();
+
+    $this->hasOne('Customer');
+    $this->hasOne('DVD');
+
+    $this->addField('date_rented')->defaultValue(date('Y-m-d'))->type('date');
+    $this->addField('date_returned')->type('date');
+        
+    $this->addField('is_returned')->type('boolean')->defaultValue(false);
+  }
+  function returnMovie(){
+    $this
+      ->set('date_returned',date('Y-m-d'))
+      ->set('is_returned',true)
+      ->save();
+  }
+}
+
+// page
+$tabs = $page->add('Tabs');
+$tabs->addTab('Customers')->add('CRUD')->setModel('Customer');
+$tabs->addTab('Movies')->add('CRUD')->setModel('Movie');
+$tabs->addTab('DVDs')->add('CRUD')->setModel('DVD');
+$tabs->addTab('Rentals')->add('CRUD')->setModel('Rental');
+<?/?>
+
