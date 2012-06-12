@@ -2,18 +2,6 @@
 $page->api->redirect('..');
 <?/?>
 
-<?Silent?>lib/Model/Item.php
-class Model_Item extends Model_Table {
-  public $table='item';
-  function init(){
-    parent::init();
-
-    $this->addfield('price');
-    $this->addfield('name');
-  }
-}
-<?/?>
-
 <?Silent?>Sample 1b
 $item = $this->add('Model_Item');
 

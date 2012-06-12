@@ -1380,7 +1380,6 @@ input.ui-button,
 .sidebar > ul > li > a {
   font-size: 10px !important;
   font-weight: bold;
-  text-transform: uppercase;
   color: #2C3F53;
   padding: 6px 10px;
   background-color: #ecf3f9;

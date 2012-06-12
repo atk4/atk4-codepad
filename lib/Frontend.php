@@ -1,6 +1,8 @@
 <?php
 class Frontend extends ApiFrontend {
     public $example_cut;
+    public $tree;
+    
 	function init(){
 		parent::init();
 		$this->dbConnect();
@@ -14,9 +16,6 @@ class Frontend extends ApiFrontend {
 
 		$this->add('jUI');
 
-        if($this->template->hasTag('SubMenu'))
-            $this->add('TreeView',null,'SubMenu',array('submenu'))
-            ->setModel('Menu');
 	}
     function page_back($p){
         $this->redirect('http://agiletoolkit.org/doc/');
@@ -28,6 +27,11 @@ class Frontend extends ApiFrontend {
         $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a,true); });
         $page->template->eachTag('ExecuteTrigger',function($a,$b) use($page){ $page->add('View_ExecuteTrigger',null,$b)->set($a,'trigger'); });
 
+
+        if(!$this->tree && $this->template->hasTag('SubMenu')){
+            $tree=$this->add('TreeView',null,'SubMenu',array('submenu'));
+            $tree->setModel('Menu');
+        }
     }
     function render(){
         $this->js(true)->_load('myuniv')->univ()->softScroll();

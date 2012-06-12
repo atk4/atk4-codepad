@@ -76,7 +76,7 @@ $item = $page->add('Model_Item');
 $item->tryLoadAny();
 
 $item['price'] = 14.99;
-$item['name'] = 'Mouse Pad';
+$item['name'] = 'Mouse Pad '.rand(1,100);
 
 $item->save();
 <?/?>
@@ -95,7 +95,10 @@ if($form->isSubmitted()){
   $form->update();
   $form->js(null,$page->js()->reload())->univ()->successMessage('Order added')->execute();
 }
+<?/?>
 
+<?ExecuteTrigger?>Clean Up Orders
+$page->add('Model_Order')->deleteAll();
 <?/?>
 
 <a name="test"></div>

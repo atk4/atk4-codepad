@@ -25,9 +25,12 @@ class TreeView extends View {
         parent::setModel($m);
 
         $this->child_ref=$this->model->hierarchy_controller->child_ref;
+        return $this->model;
     }
 
     function formatRow(){
+        if($this->current_row['page'] instanceof URL)return;
+        if($this->stack[0] instanceof Model)return;
         $this->current_row['page']=$this->api->url($this->stack[0]['page'].'/'.$this->current_row['page']);
     }
 
