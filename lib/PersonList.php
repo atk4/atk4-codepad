@@ -1,3 +1,3 @@
 <?php
-class PersonList extends MVCLister {
+class PersonList extends CompleteLister {
 }

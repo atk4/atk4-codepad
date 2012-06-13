@@ -34,6 +34,7 @@ class Model_Menu extends hierarchy\Model_Array {
             ),
             'layouts'=>array(
                 'Changind Layout and Design',
+                'playground'=>'Standard CSS styles',
                 'frames'=>'Frames and Containers',
             ),
             'interaction'=>array(
@@ -71,16 +72,52 @@ class Model_Menu extends hierarchy\Model_Array {
                 'Add-ons',
                 'password-strength'=>'Testing Password Strength',
                 'inline-grid'=>'Grid In-Line editing',
-            )
-        )));
-    }
+            ),
+            'old'=>array(
+                'Older Examples',
+                '50employees'=>'50employees',
+                '50employees2'=>'50employees2',
+                'autocomplete'=>'autocomplete',
+                'buttonpushing'=>'buttonpushing',
+                'columns'=>'columns',
+                'contact'=>'contact',
+                'dragaction'=>'dragaction',
+                'editablef'=>'editablef',
+                'facebook'=>'facebook',
+                'hangman'=>'hangman',
+                'hello'=>'hello',
+                'hybrid'=>'hybrid',
+                'image'=>'image',
+                'index'=>'index',
+                'infiniteadd1'=>'infiniteadd1',
+                'issue12'=>'issue12',
+                'jsonac'=>'jsonac',
+                'layoutswitch'=>'layoutswitch',
+                'metatags'=>'metatags',
+                'multiupload'=>'multiupload',
+                'myformat'=>'myformat',
+                'newsletter'=>'newsletter',
+                'projectview'=>'projectview',
+                'quicksearch'=>'quicksearch',
+                'reloadform'=>'reloadform',
+                'reloadformac'=>'reloadformac',
+                'reloadtest'=>'reloadtest',
+                'salesphotos'=>'salesphotos',
+                'slider'=>'slider',
+                'slotmachine'=>'slotmachine',
+                'stackcrud'=>'stackcrud',
+                'tmail'=>'tmail',
+                ''=>'',
+                )
+            )));
+}
 
-    /** creates a field, which shows number of children for every entry */
-    function addChildCount($field){
+/** creates a field, which shows number of children for every entry */
+function addChildCount($field){
 
         // Implementation for Array
-        foreach($this as $row){
+    foreach($this as $row){
 
-        }
     }
+}
 }

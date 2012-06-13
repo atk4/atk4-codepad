@@ -7,6 +7,9 @@ class page_image extends Page {
 		parent::init();
 		$f=$this->add('Form');
 
+		$this->add('View_Error')->set('Filestore syntax have been updated. It is now an add-on. New example coming soon.');
+		return;
+
 		$f->addField('upload','upload')->setModel('Filestore_Image');
 
 		$this->add('FileGrid')->setModel('Filestore_Image');

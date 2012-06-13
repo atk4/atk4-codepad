@@ -4,15 +4,16 @@ class page_myformat extends Page {
         parent::init();
         $this->api->dbConnect();
         $m=$this->add('Model_Employee');
+        $m->getField('name')->display('myfield');
         $m->getField('salary')->display(array('grid'=>'myfield'));
-        $this->add('MVCGrid')->setModel($m);
+
+        $this->add('MyGrid')->setModel($m);
     }
 }
 
-if(!class_exists('Grid',false)){
-class Grid extends Grid_Basic {
+class MyGrid extends Grid{
     function format_myfield($field){
-        $this->current_row[$field]='CUSTOM FORMAT';
+        //$this->current_row_html[$field]='CUSTOM FORMAT: '.$this->current_row[$field];
+        $this->current_row_html[$field]='<u>CUSTOM FORMAT</u>: '.$this->current_row[$field];
     }
-}
 }

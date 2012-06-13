@@ -1,7 +1,8 @@
 <?php
-class TaskList extends MVCLister {
+class TaskList extends CompleteLister {
 	function formatRow(){
-		$id=$this->current_row['id'];
+		$id=$this->current_id;
+
 
 		$this->current_row['allocated']=print_r($this->owner->allocated[$id],true);
 	}

@@ -7,10 +7,13 @@ class page_columns extends Page {
 		parent::init();
 		$page=$this;
 
+		$this->add('H2')->set('On-Line Sandwitch');
+
+		// Define contents of our grids. They don't have to be sourced from DB
 		$options['col1']=array(
 				array('value'=>'Cheese'),
 				array('value'=>'Chicken'),
-				array('value'=>'Letuce <:'),
+				array('value'=>'Letuce <:'),	// we are HTML-safe
 				);
 		$options['col2']=array(
 				array('value'=>'Egg'),
@@ -18,43 +21,41 @@ class page_columns extends Page {
 				array('value'=>'Grilled Ol\'Japaleno'),
 				);
 
-	   	$form = $page->add('Form',null,null,array('form_empty'));
-        $form->setFormClass('horizontal');
+		// using a different form template to lay out fields horizontally. Remember that you can always
+		// create your own template for a form
+	   	$form = $page->add('Form',null,null,array('form_horizontal'));
+
+	   	// Agile Toolkit allows us to insert anything into anothyng. Why not add columns and grid into form
         $columns = $form->add('Columns');
-        
-        $grid1 = $columns->addColumn()->add('Grid');
-        $grid2 = $columns->addColumn()->add('Grid');
+        $grid1 = $columns->addColumn(6)->add('Grid');
+        $grid2 = $columns->addColumn(6)->add('Grid');
 
         $grid1->setStaticSource($options['col1']);
         $grid2->setStaticSource($options['col2']);
         
-        $grid1->addColumn('template','Topping')->setTemplate('<input type=\'radio\' name=\'selection\' value="<?$value?>"/> <?$value?>');
-        $grid2->addColumn('template','Topping')->setTemplate('<input type=\'radio\' name=\'selection\' value="<?$value?>"/> <?$value?>');
+        // Column of type TEMPLATE allows us to set a custom HTML to be used inside a column
+        // It will also have values inserted right in
+        $grid1->addColumn('template','Topping')
+        	->setTemplate('<input type=\'radio\' name=\'selection\' value="<?$value?>"/> <?$value?>');
+        $grid2->addColumn('template','Topping')
+        	->setTemplate('<input type=\'radio\' name=\'selection\' value="<?$value?>"/> <?$value?>');
 
 		$salad_size = $form->addField('line','salad_size','Max Salad Size')->set(30);
-
 		$salad_field = $form->addField('line','salad');
-		$salad_button = $salad_field->add('Button',null,'after_field')->setLabel('randomize');
-		$salad_button->js('click')->univ()->ajaxec(
-				array(
-					$this->api->getDestinationURL(), 
-					'generate_salad'=>true,
-					'salad_size'=>$salad_size->js()->val(),
-				));
 
+		// addButton is a new method in ATK4.2 which allows to append or pre-pend button to your input
+		// field.
+		$salad_button = $salad_field->addButton('after')->setLabel('randomize');
+		if($salad_button->isClicked()){
+			$salad_field->js()->val( rand(10,$_GET['salad_size']) )->execute();
 
-		if($_GET['generate_salad']) $salad_field->js()->val( rand(10,$_GET['salad_size']) )->execute();
-        $form->addSubmit('Order');
-        if($form->isSubmitted())
-            $form->js()->univ()->alert('Ordered '.$_POST['selection'].' of size '.$form->get('salad'))->execute();;
-
-
-		$form=$this->add('Frame')->setTitle('XL Salads')->add('Form');
-		$form->addField('line','salad_size','Max Salad Size')->set(50);
-		$form->addSubmit();
-		if($form->isSubmitted()){
-			$salad_field->js()->val( rand(10,$form->get('salad_size')))->execute();
 		}
+		$salad_field = $form->addField('checkbox','heat','Reheat your sandwitch');
 
+        $form->addSubmit('Place Order');
+        if($form->isSubmitted())
+            $form->js()->univ()->alert('Ordered '.$_POST['selection'].' of size '.$form->get('salad').
+            	($form->get('heat')?'. Reheated':'')
+            	)->execute();
 	}
 }

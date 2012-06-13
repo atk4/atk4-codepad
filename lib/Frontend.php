@@ -21,8 +21,23 @@ class Frontend extends ApiFrontend {
         $this->redirect('http://agiletoolkit.org/doc/');
     }
     function initLayout(){
-        parent::initLayout();
+        try {
+            parent::initLayout();
+        }catch(Exception_StopInit $e){}
         $page=$this->page_object;
+
+        if(@$page->descr){
+            $page->add('Order')->move(
+                $page->add('View_Info')->setHTML($page->descr)
+                ,'first')->move(
+                $page->add('Button')->set('View Source')->js('click')
+                    ->univ()->location('https://github.com/atk4/atk4-codepad/blob/master/page/'.
+                    $this->api->page.'.php')->owner
+                ,'first')->now();
+
+
+        }
+
         $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a); });
         $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a,true); });
         $page->template->eachTag('ExecuteTrigger',function($a,$b) use($page){ $page->add('View_ExecuteTrigger',null,$b)->set($a,'trigger'); });

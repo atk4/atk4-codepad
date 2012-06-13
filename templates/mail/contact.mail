@@ -1,0 +1,9 @@
+<?subject?>Contact from sample Agile Toolkit form<?/?>
+
+<h2>Contact Form was filled!</h2>
+
+<p>
+From: <?$name?> (<?$email?>)<br/>
+Phone: <?$phone?></p>
+
+<p><?$notes?></p>

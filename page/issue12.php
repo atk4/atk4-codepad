@@ -6,10 +6,10 @@ class page_issue12 extends Page {
 		parent::init();
 
 
-		$g=$this->add('MVCGrid')->setModel('User');
+		$g=$this->add('MVCGrid')->setModel('Employee');
 
 		$g=$this->add('MVCGrid');
-		$g->setModel('User');
-		$g->addQuickSearch(array('email'));
+		$g->setModel('Employee');
+		$g->addQuickSearch(array('name','salary'));
 	}
 }

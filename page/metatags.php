@@ -6,8 +6,8 @@ class page_metatags extends Page {
 
 		parent::init();
 
-		$this->api->template->append('js_include','<meta testing="123"/>');
+		$this->api->template->appendHTML('js_include','<meta testing="123"/>');
 
-		$this->add('View_Info')->set('View HTML source of this page, search for "123"');
+		$this->add('View_Info')->set('View HTML source of this page, search for <meta testing="123"/>');
 	}
 }

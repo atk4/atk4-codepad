@@ -10,7 +10,7 @@ $.each({
         }
 
         if ("onhashchange" in window) {
-            $('[name]').each(function(){
+            $('a[name]').each(function(){
                 var t=$(this);
                 t.attr('name','ss_'+t.attr('name'));
             });
