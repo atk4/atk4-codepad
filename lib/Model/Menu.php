@@ -71,7 +71,7 @@ class Model_Menu extends hierarchy\Model_Array {
             'addons'=>array(
                 'Add-ons',
                 'password-strength'=>'Testing Password Strength',
-                'inline-grid'=>'Grid In-Line editing',
+                'jqgrid'=>'Integration with jqGrid',
             ),
             'old'=>array(
                 'Older Examples',
