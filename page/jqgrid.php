@@ -4,28 +4,12 @@ class page_jqgrid extends Page {
 	function init(){
 		parent::init();
 		
-
-		$this->add('H2')->set('jqGrid with static source');
-		$g=$this->add('jqgrid/jqGrid');//->setModel('Employee');
-
-		$g->addColumn('text','hello',array('width'=>300));
-		$g->addColumn('text','col2');
-
-		$g->setSource(
-			array(
-				array('hello'=>'world','col2'=>'test'),
-				array('hello'=>'of','col2'=>'<b>abc'),
-				array('hello'=>'Grid','col2'=>'ok'),
-				)
-			);
-
-		$this->add('H2')->set('jqGrid with Model');
-
-		$g=$this->add('jqgrid/jqGrid')->setModel('Employee');
+		$this->add('View_Example','pagesource')->set("\n".'$page->add(\'jqgrid/jqGrid\')->setModel(\'Employee\');')
+			->template->trySet('title','Source');
 
 
-		$this->add('H2')->set('View Source');
-
+		$this->add('H2')->set('Add-on source');
+		$this->add('View_Info')->set('The source of an add-on is educational, but you do not need them to get jqGrid working. It is all already included in jqgrid add-on distribution');
 		$this->add('ViewSource','viewsource')->setFile($f='atk4-addons/jqgrid/lib/jqGrid.php')
 			->template->trySet('title','Source of '.$f);
 

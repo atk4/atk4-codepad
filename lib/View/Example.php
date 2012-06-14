@@ -43,6 +43,7 @@ class View_Example extends View {
             $res->destroy();
             $this->template->del('has_demo');
         }
+        return $this;
     }
     function executeDemo($code){
         $page=$this->add('View',null,'Demo');
