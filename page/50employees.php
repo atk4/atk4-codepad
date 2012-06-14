@@ -18,9 +18,9 @@ class page_50employees extends Page {
 				$emp=$f->get('e'.$i);
 				if($emp){
 					$cnt++;
-					$m->unloadData()
+					$m->reset()
 						->set('name',$emp)
-						->update();
+						->save();
 				}
 			}
 			$f->js()->univ()->alert($cnt.' employees added')
