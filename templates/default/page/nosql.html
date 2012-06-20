@@ -1,0 +1,26 @@
+<h1>Creating your own Data Controller</h1>
+<p>The core package of Agile Toolkit provides a basic support for NoSQL models (non-relational models). There are no standard API or language therefore controllers must exist which will help integrate standard model actions with your database of choice.</p>
+
+<p>Some of the storage methods are based around array access, and therefore make use of existing Data_Array controller. The following example implements Data_Sesion controller which will store data in the standard PHP session.</p>
+
+<?Example?>
+class Controller_Data_Session extends Controller_Data_Array {
+	function setSource($model,$ref){
+		session_start();
+		if(!$_SESSION[$ref])$_SESSION[$ref]=array();
+		$model->table=&$_SESSION[$ref];
+	}
+}
+<?/?>
+
+<p>Controller and table identifier are specified through setSource. </p>
+
+<?Example?>
+$m=$page->add('Model');
+
+$m->setSource('Session','test');
+$m->addField('surname');
+
+$page->add('CRUD')->setModel($m,array('id','name','surname'));
+<?/?>
+
