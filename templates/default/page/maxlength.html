@@ -1,0 +1,101 @@
+<h2>Strict length checking for Agile Toolkit</h2>
+
+<p>I have been asked by one of the Agile Toolkit users who have been with us since 4.1 version about how to set a maximum length on the fields and models.</p>
+
+<p>On the individual basis, it's quite easy to set up the limitation, however what about creating a more sensible approach to defining length of model field? Here is how it can be done:</p>
+
+
+<h3>The Plan</h3>
+<p>There are different ways to achieve things in Agile Toolkit. I am going to create a intermediate table for Model and Field. My new class for Modle will be capable of quickly checking length limitations on all the fields. The new Field class would introduce a new property "maxlength" which can be changed for any field.</p>
+
+<p>Alternativevly I could have used add-on funcitonality, but it would result in a more complex code, therefore I decided to keep it simple and easy to understand.</p>
+
+<h3>Creating new Field Class</h3>
+
+<p>Model fields in Agile Toolkit are described by object of "Field" class. I am going to create a class 'MyField'. You can call it differently if you wish to.</p>
+
+<?Example?>MyField
+interface Interface_MaxLength {
+	function maxlength($t=undefined);
+}
+
+class MyField extends Field implements Interface_Maxlength{
+
+  public $maxlength=255;
+
+  function type($t=undefined){
+    if($t==='text' && $this->maxlength===255)$this->maxlength=null;
+    return parent::type($t);
+  }
+
+  // setting length manually
+  function maxlength($t=undefined){
+    return $this->setterGetter('maxlength',$t);
+  }
+}
+<?/?>
+
+<h3>Creating new Model Class</h3>
+<p>Although it was possible to create callback in each field individually, I wanted to have all the field validation to be done in the model instead. This has slight disadvantage in terms of flexibility.</p>
+
+<?Example?>Model_MyTable
+class Model_MyTable extends Model_Table {
+
+	public $field_class='MyField';
+
+	function init(){
+		parent::init();
+		$this->addHook('beforeSave',array($this,'checkMaxLength'));
+	}
+
+	function checkMaxLength($m){
+		// Iterate through all fields which support maxlength
+
+		foreach($this->elements as $el)if($el instanceof Interface_Maxlength){
+			if($el->maxlength() && strlen($el->get()) > $el->maxlength()){
+				throw $this->exception('Maximum length of this field is '.
+					(int)$el->maxlength(),'ValidityCheck')->setField($el->short_name);
+			}
+		}
+	}
+}
+<?/?>
+
+<h3>Testing</h3>
+<p>Before going further, let's test our new creation.</p>
+
+<?Example?>Model_CategoryMaxlength
+class Model_CategoryMaxlength extends Model_MyTable {
+	public $table='category';
+	function init(){
+		parent::init();
+
+		$this->addField('name')->maxLength(10);
+	}
+}
+<?/?>
+
+<?ExecuteTrigger?>Example 1
+try {
+	$m=$page->add('Model_CategoryMaxlength');
+	$m->set('name','very long name for category');
+	$m->save();
+}catch(Exception $e){
+	$page->add('View_Error')->set($e->getMessage());
+}
+<?/?>
+
+<h3>Example with Form</h3>
+
+<?Example?>Example 2
+$form = $page->add('Form');
+$form->setModel('CategoryMaxlength');
+$form->set('name','very long name for category');
+$form->addSubmit();
+$form->onSubmit(function($form){
+	$form->update()->univ()->successMessage('Successfully Created!')->execute();
+});
+<?/?>
+
+<h3>Conclusion</h3>
+<p>Defining custom field and model class can proove to be useful for other goals. In larger projects sometimes I create intermediate class between the one Agile Toolkit provides and the one I'm using. This allows me to inject functionality globally into all models of my project. This is a great technique and you are welcome to use it for your purposes.</p>
