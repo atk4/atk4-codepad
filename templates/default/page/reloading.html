@@ -1,0 +1,237 @@
+<h2>Dynamic page reloads or Introduction to AJAX in Agile Toolkit</h2>
+
+<p>Most of the modern Web Software relies to certain extent to AJAX (Asynchronous JavaScript and XML). This is how AJAX works:
+	<ol>
+		<li>User opens www.example.com in the browser</li>
+		<li>Web Server receives request, produces HTML with JavaScript and sends to the browser</li>
+		<li>Browser renders HTML then executes JavaScript</li>
+		<li>Certain event in the browser executes JavaScript function, which may send AJAX request to the server</li>
+		<li>Server produces response to AJAX request and sends response in XML, JSON or HTML</li>
+		<li>JavaScript funciton receives and dynamically updates page content</li>
+	</ol>
+</p>
+
+<h3>Introduction to AJAX in Agile Toolkit</h3>
+
+<p>Most of web languages and frameworks are running unaware of what it is on your page. They can recognize requests and respond with certain HTML, XML or JSON results but the developer is responsible for making front-end recognize the request</p>
+
+<p>The Agile Toolkit approach is significantly different. Agile Toolkit runs aware of the objects on your screen. That is because each visual object is represented by Object in PHP.</p>
+
+<p>You might be wondering, how browser and PHP object can conect? PHP does not have presence and every request creates new set of objects. Luckily Agile Toolkit is able to re-construct the objects in exactly the same way how they were when the page was initially generated. So it's easy to selectively render one or several objects.</p>
+
+<?Example?>
+	$columns = $page->add('Columns');
+	$left = $columns->addColumn(10);
+	$right = $columns->addColumn(2);
+
+	$outer_box = $left->add('View_Info');
+	$outer_box->add('LoremIpsum')->setLength(1,8);
+
+	$inner_box = $outer_box->add('View_Error');
+	$inner_box->add('LoremIpsum')->setLength(1,8);
+
+	$right->add('Button')->set('Reload Outer')
+		->js('click', $outer_box->js()->reload());
+	$right->add('Button')->set('Reload Inner')
+		->js('click', $inner_box->js()->reload());
+<?/?>
+
+<h3>Event-based reloading</h3>
+<p>JavaScript is based around events. One of the popular events is "click" - binding to this event will cause code to be executed when user clicks object with a mouse. JavaScript / jQuery however allows you to define custom events and trigger them.</p>
+
+
+<?Example?>
+	$b1 = $page->add('Button')->set('Server Time One: '.date('H:i:s'));
+	$b1->js('click', $b1->js()->reload());
+
+	$b2 = $page->add('Button')->set('Server Time Two: '.date('H:i:s'));
+	$b2->js('myevent', $b2->js()->reload());
+
+	$b3 = $page->add('Button')->set('Server Time Three: '.date('H:i:s'));
+	$b3->js('click', $b2->js()->trigger('myevent'));
+<?/?>
+
+<p>In this example above, first button reacts on click and executes reload. Second button reacts to "myevent" and executes reload. Third button reacts on "click" and triggers "myevent" for second button reloading it.</p>
+
+<h3>Reloading multiple items</h3>
+<p>Sometimes your page would have multiple areas which needs to be reloaded. Agile Toolkit allows you to reload multiple blocks at the same time. Curiously Agile Toolkit will also apply the JavaScript on reloaded widget as required.</p>
+
+<?Example?>
+	$columns = $page->add('Columns');
+	$c1 = $columns->addColumn(4);
+	$c2 = $columns->addColumn(4);
+	$c3 = $columns->addColumn(4);
+
+	$f1=$c1->add('Frame')->setTitle('Random Number')->set(rand(1,50));
+	$f2=$c2->add('Frame')->setTitle('Current Time')->set(date('H:i:s'));
+	$f3=$c3->add('Frame')->setTitle('Unique ID')->set(uniqid());
+
+	$f1->addClass('myclass1');
+	$f2->addClass('myclass1 myclass2');
+	$f3->addClass('myclass1 myclass2');
+
+	$f1->js('myevent',$f1->js()->reload());
+	$f2->js('myevent',$f2->js()->reload());
+	$f3->js('myevent',$f3->js()->reload());
+
+	$f1->js(true)->effect('highlight');
+	$f2->js(true)->effect('highlight');
+	$f3->js(true)->effect('highlight');
+
+
+	$page->add('Button')->set('reload class1')->js('click',
+		$page->js()->find('.myclass1')->trigger('myevent')
+	);
+
+	$page->add('Button')->set('reload class2')->js('click',
+		$page->js()->find('.myclass2')->trigger('myevent')
+	);
+<?/?>
+
+<h3>Passing Arguments when Reloading</h3>
+<p>You can incorporate additional information when you performing reload. This is done by supplying argument to reload() method containing key=>value to be passed as GET arguments into a new request.</p>
+
+<?Example?>
+	$form=$page->add('Form',null,null,array('form_empty'));
+
+	$a=$form->addField('line','a','')->setClass('span2')->set(2);
+	$form->add('Text')->set('+');
+
+	$b=$form->addField('line','b','')->setClass('span2')->set(2);
+
+	$but=$form->add('Button')->set('Calculate');
+
+	$r=$page->add('Frame')->setTitle('Result')->set(($_GET['a'] + $_GET['b'])?:'-');
+
+	$but->js('click', $r->js()->reload(array(
+		'a'=>$a->js()->val(),
+		'b'=>$b->js()->val()
+	)));
+<?/?>
+<p>Make note that the button above does not actually using form submission. Instead it collect the input from the fields manually and performs a single element reload.</p>
+
+<h3>The Anatomy of Reload</h3>
+
+<p>jQuery offers a great method for re-loading elements: $('element').load(url);. Agile Toolkit offers it's own implementation of a method which relies on jQuery UI widget factory to do the loading. Here are some examples and comparisons.</p>
+
+<?Example?>
+	$but=$page->add('Button')->set('Reset');
+	$columns = $page->add('Columns');
+	$but->js('click',$columns->js()->reload());
+
+	$c1 = $columns->addColumn(6)->add('Frame')->setTitle('jQuery().load()');
+	$c2 = $columns->addColumn(6)->add('Frame')->setTitle('atk4_loader()');
+
+	$b1=$c1->add('View_Info');
+	$b2=$c2->add('View_Info');
+
+	for($x=1;$x<5;$x++){
+		$c1->add('Button')->set('Test #'.$x)->js('click', $b1->js()->load(
+			$this->api->url(null,array('side'=>1,'myajax'=>$x))
+		) );
+
+		$c2->add('Button')->set('Test #'.$x)->js('click', $b2->js()->atk4_load(
+			$this->api->url(null,array('side'=>2,'myajax'=>$x))
+		) );
+	}
+
+	if($_GET['side']){
+		$bb="b".$_GET['side'];	// either b1 or b2
+		$bb=$$bb;				// get value of $b1 or $b2
+	}
+
+	if($_GET['myajax']==1){
+		echo "<div>Random number: ".rand(1,20)."</div>";
+		exit;
+	}
+
+	if($_GET['myajax']==2){
+		echo "<div id=".$bb->name.">Random number: ".rand(1,20)."</div>";
+		exit;
+	}
+	if($_GET['myajax']==3){
+		echo "<div id=".$bb->name."><script>\$(function(){ ".
+		"oZ(*2(() });</script>Random number: ".rand(1,20)."</div>";
+		exit;
+	}
+
+	if($_GET['myajax']==4){
+		sleep(5);
+
+		$times=$this->recall('times');
+		$times++;
+		$this->memorize('times',$times);
+
+		echo "<div id=".$bb->name.">Clicked ".$times." times</div>";
+
+		exit;
+	}
+
+
+<?/?>
+
+<p>In test #1 both implementations behave identically. The new content is placed within the container in both cases.</p>
+<p>The Test #2 however returns HTML element with SAME ID as the one we are reloading. That's a common case when you reload content of a HTML widget. jQuery puts new content inside existing without caring, but atk4_loader replaces original element with new.</p>
+<p>In Test #3 we are supplying additional JavaScript to demonstrate slight different approach to evaluating JavaScript</p>
+
+<p>In Test #4 we create 1 second delay before providing results. Clicking button continiously is not generating multiple requests, however with atk4_loader it's possible to redefine visual feedback of when loading is already in progress. Agile Toolkit will also detect slow loading of an object and will provide with the URL.</p>
+
+<h3>The Debug Mode</h3>
+<?Example?>
+$v=$page->add('View');
+$v->add('LoremIpsum')->setLength(1,100);
+$v->js(true)->atk4_loader(array('debug'=>true,'url'=>$this->api->url(null,array('cut_object'=>$v->name))));
+
+$v->add('Form')->addField('line','a','change me');
+
+$b=$page->add('Button')->set('Reload')->js('click',$page->js()->find('.atk4_loader')->atk4_loader('reload'));
+<?/?>
+
+<p>Running loader in debug mode can reveal few more hidden feature of ATK4 loader. First it automatically tracks any changed fields in the forms within the reloadable region. If field content is changed, user is presented with a warning. The widget also can store the original URL where data was loaded from and can reload it if necessary. The button in the example will attempt to find widget by a signature "atk4_loader" class and reload it through a widget method.</p>
+
+<p>The final major difference is that atk4_loader accepts array-type argument. This would have little benefit if you would be writing regular JavaScript as you could do: $('div').load('mypage.html?val='+($('#field').val())). When JavaScript is being translated through PHP / js() method, concatination is not obvious. Additionally example above is not properly encoding field value. But with array it's all done perfectly.</p>
+
+<?Example?>
+$field=$page->add('Form')->addField('line','a','change me')->set('foo?test=123');
+$b=$page->add('Button')->set($_GET['arg']?:'value');
+
+$b->js(true)->atk4_loader();
+
+$b->js('click')->atk4_loader('loadURL',
+	array($this->api->url(),'cut_object'=>$b->name,'arg'=>$field->js()->val()));
+<?/?>
+
+<h3>PHP Sugar: js()->reload()</h3>
+<p>Function js() returns a object which transforms calls into JavaScript. reload() however is treated differently. When you call this method, it will swap some arguments and incorporate cut_object into the arguments.</p>
+
+<p>While you can generate URLs yourself, it's suggested that you simply rely on reload().</p>
+
+<h3>cut_page, cut_object and cut_region</h3>
+
+<p>The GET arguments starting with cut_ determine which part of the page will be rendered by Agile Toolkit. Pretty much any request can be cut to limit output to certain object.</p>
+
+<p>cut_page=1 will automatically output contents of the whole page. That's what frameURL and dialogURL use it when opening pages in a dialog. Most likely you wouldn't need to send styles anyway, so this is convenient way to show only what's necessary.</p>
+
+<p>cut_object can be used to restrict output only of a certain object. You can specify either full $object->name or use $object->short_name (as long as it is unique).</p>
+
+<?Example?>
+
+$l=$page->add('Frame')->add('LoremIpsum')->setLength(1,10);
+
+$page->add('View')->add('View')->setElement('a')->setAttr('href',
+	$this->api->url(null,array('cut_page'=>1)))
+	->set('Show HTML-only of this page');
+
+$page->add('View')->add('View')->setElement('a')->setAttr('href',
+	$this->api->url(null,array('cut_object'=>$l->name)))
+	->set('Show HTML-only of LoremIpsum');
+
+<?/?>
+
+<h3>Conclusion</h3>
+<p>Agile Toolkit unlike other Web Frameworks has a high awarness of objects on the page on a global level. Any un-prepared object can be reloaded without loss of functionality. This example does not address the other form of AJAX requests which are used by Agile Toolkit : executable AJAX calls (ajaxec).</p>
+
+
+
+
+

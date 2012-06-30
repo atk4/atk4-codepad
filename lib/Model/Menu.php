@@ -35,18 +35,11 @@ class Model_Menu extends hierarchy\Model_Array {
             'layouts'=>array(
                 'Changind Layout and Design',
                 'playground'=>'Standard CSS styles',
-                'frames'=>'Frames and Containers',
+               // 'frames'=>'Frames and Containers',
             ),
             'interaction'=>array(
                 'Interaction and JavaScript',
-                'binding'=>'Event Binding',
-                'chains'=>'Multiple Chains',
-                'closures'=>'JavaScript Closures',
-                'univ'=>'Universal Library univ.js',
-                'custom'=>'Extending JavaScript',
-                'form-widget'=>'Form Widget',
-                'ajax'=>'Basic AJAX',
-                'ajax-widget'=>'AJAX with Views',
+                'reloading'=>'Dynamic pages and AJAX',
             ),
             'features'=>array(
                 'Advanced Features',
