@@ -11,10 +11,10 @@ class page_editablef extends Page {
 		//$g->addColumn('grid/inline','email');
 		//$g->addColumn('expander','comments');
 		$g->setModel('Employee');
-		$g->addFormatter('name','grid/inline')->editFields(array('name','salary'));
+        $g->addFormatter('name','grid/inline');
+		$g->addFormatter('salary','grid/inline');
 		$g->makeSortable();
 		$g->getColumn('name')->makeSortable();
-//		$g->addFormatter('salary','grid/inline');
 	}
     function page_comments(){
         $this->add('Text')->set('id='.(int)$_GET['id']);

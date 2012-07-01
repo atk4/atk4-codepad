@@ -23,18 +23,11 @@ class page_tmail extends Page {
 		if(!$mail->get('from'))$mail->set('from',$this->api->getConfig('mail/from','nobody@nowhere.com'));
 		$this->add('HtmlElement')
 			->setElement('H1')
-			->set('Headers');
+			->set('Email Source');
 		$pre=$this->add('HtmlElement')->setElement('pre');
 
 		$pre->add('Text')->set('Subject: '.$mail->get('subject',false)."\n");
-		$pre->add('Text')->set($mail->getHeaders());
-
-		$this->add('HtmlElement')
-			->setElement('H1')
-			->set('Body');
-		$this->add('HtmlElement')
-			->setElement('pre')
-			->set($mail->getBody());
+		$pre->add('Text')->set($mail->template->render());
 
 	}
 }

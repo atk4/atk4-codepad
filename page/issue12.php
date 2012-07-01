@@ -11,5 +11,7 @@ class page_issue12 extends Page {
 		$g=$this->add('MVCGrid');
 		$g->setModel('Employee');
 		$g->addQuickSearch(array('name','salary'));
+        $g->template->trySetHTML('grid_buttons','&nbsp;');
+
 	}
 }
