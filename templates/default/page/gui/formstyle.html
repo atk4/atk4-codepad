@@ -1,0 +1,160 @@
+<h2>Form Styling Examples</h2>
+
+<p>First let's declare a form</p>
+<?Example?>StylingForm
+class StylingForm extends Form {
+    function init(){
+        parent::init();
+        $f=$this;
+
+        $f->addField('line','name')->validateNotNull()
+            ->setFieldHint('Click "Register" to see error');
+        $f->addField('line','email')
+            ->validateNotNull()
+            ->validateField('filter_var($this->get(), FILTER_VALIDATE_EMAIL)')
+            ;
+
+        $f->addField('password','password')->validateNotNull()
+            ->setProperty('max-length',30)->setFieldHint('30 characters maximum');
+
+        $p2=$f->addField('password','password2')
+            ->validateField('$this->get()==$this->owner->getElement("password")->get()',
+                    'Passwords do not match');
+
+
+
+
+        $f->addField('DatePicker','date_birth','Birthdate');
+
+        $f->addField('dropdown','age')
+            ->setValueList(array('','11 - 20', '21 - 30', '31 - 40'));
+
+        $f->addField('text','about')
+            ->setProperty('cols',45)->setProperty('rows','5')
+            ->validateField('5000>=strlen($this->get())','Too long');
+
+        $f->addField('radio','sex')
+            ->setValueList(array('m'=>'Male','f'=>'Female'))
+            ;  // automatically validated to be one of value list
+
+
+
+        $f->addField('checkbox','agreeRules','I Agree to Rules and Terms'
+                )->validateNotNull('You must agree to the rules');
+
+
+        $js=array();
+        $this->js()->atk4_form('fieldError','password2','Passwords do not match');
+        $this->js()->atk4_form('fieldError','age','Age is not entered - sample longer error which may span');
+        $this->js()->atk4_form('fieldError','about','Sample error on textarea field');
+
+
+        $f->addSubmit('Submit');
+    }
+}
+<?/?>
+
+
+<?Example?>example 1
+$form=$page->add('Form');
+$form->setModel('Employee');
+
+$sep=$form->addSeparator();
+
+// Ordering controller can re-position child elements now or later
+$form->add('Order')->move($sep,'after','name')->now();
+<?/?>
+
+<h3>Styling - default</h3>
+
+<?ExecuteTrigger?>example 1
+$form=$page->add('StylingForm');
+<?/?>
+
+<h3>Styling - stacked</h3>
+<?ExecuteTrigger?>example 2
+// Stacked class puts labels on top of fields
+$form=$page->add('StylingForm');
+$form->addClass('stacked');
+<?/?>
+
+<h3>Styling - vertical 2 columns</h3>
+<?ExecuteTrigger?>example 3
+// Stacked class puts labels on top of fields
+$form=$page->add('StylingForm');
+$form->addClass('stacked atk-row');
+
+$form->template->trySet('fieldset','span6');
+$sep=$form->addSeparator('span6');
+$form->add('Order')->move($sep,'before','age')->now();
+<?/?>
+
+<h3>Styling - vertical 3 or more columns</h3>
+<?ExecuteTrigger?>example 4
+$form=$page->add('StylingForm');
+$form->addClass('stacked atk-row');
+
+// strategical placement of atk-row and spanX 
+$form->template->trySet('fieldset','span3');
+$form->add('Order')
+	->move('sex','before','age')
+	->move($form->addSeparator('span3'),'before','password2')
+	->move($form->addSeparator('span6'),'before','age')
+	->now();
+
+<?/?>
+
+<h3>Styling - hybrid layouts</h3>
+<?ExecuteTrigger?>example 5
+// Stacked class puts labels on top of fields
+$form=$page->add('StylingForm');
+$form->addClass('stacked atk-row');
+
+// strategical placement of atk-row and spanX 
+$form->template->trySet('fieldset','atk-row');
+
+$form->getElement('name')->template->trySet('row_class','span6');
+$form->getElement('email')->template->trySet('row_class','span6');
+
+$form->add('Order')
+	->move($form->addSeparator('span3'),'after','email')
+	->move($form->addSeparator('span3'),'after','password2')
+	->move($form->addSeparator('span5'),'before','about')
+	->now();
+
+<?/?>
+
+<h3>Styling - horizontal</h3>
+<?ExecuteTrigger?>example 6
+// Stacked class puts labels on top of fields
+$form=$page->add('StylingForm',null,null,array('form_horizontal'));
+
+$form->getElement('name')->template->trySet('row_class','span6');
+$form->getElement('email')->template->trySet('row_class','span6');
+
+//$form->getElement('email')->js(true)->parent()->next('div')->addClass('span4');
+
+$form->add('Order')
+	->move($form->addSeparator('atk-row'),'after','email')
+	->move($form->addSeparator('atk-row'),'before','about')
+	->now();
+
+<?/?>
+
+<h3>Styling - empty template with custom layout</h3>
+<p>Although this might look like a mess, empty field helps you eliminate any form formatting. This way you can do simply output fields without worries.</p>
+<?ExecuteTrigger?>example 7
+$form=$page->add('StylingForm',null,null,array('form_empty'));
+<?/?>
+
+<p>Empty template in collaboration with custom layout can give you the most flexible field configuration on a form.</p>
+
+<?ExecuteTrigger?>example 8
+$form=$page->add('StylingForm',null,null,array('form_empty'));
+$form->setLayout('form/mylayout');
+<?/?>
+
+Template:
+<div style="border: 1px solid black">
+	Hi. My Name is &lt;?$name?&gt; and my email is &lt;?$email?&gt;. I am writing to you because I'm willing to change my password to &lt;?$password?&gt;, i repeat &lt;?$password2?&gt;.
+</div>

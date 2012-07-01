@@ -10,12 +10,12 @@ class Model_Borrower extends Model_Member {
 		
 		$this->b=$this->join('library_borrowing.library_member_id');
 
-		$this->b->hasOne('Staff','verified_by');
-		$this->b->addField('borrowed');
-		$this->b->addField('is_returned');
-		$this->b->addField('returned');
+		$this->b->hasOne('Staff','verified_by')->sortable(true);
+		$this->b->addField('borrowed')->sortable(true);
+		$this->b->addField('is_returned')->sortable(true);
+		$this->b->addField('returned')->sortable(true);
 
-		$this->b->join('library_book')->addField('book_name','name');
+		$this->b->join('library_book')->addField('book_name','name')->sortable(true);
 
 		// Showing only if borrowed
 		//$this->addCondition('is_returned',false);

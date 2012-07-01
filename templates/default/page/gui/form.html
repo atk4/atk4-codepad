@@ -2,7 +2,7 @@
 
 <p>Form is a fundamental component of any web application. Agile Toolkit greatly simplifies form creation.</p>
 
-<?Example?>
+<?Example?>example 1
 $form=$page->add('Form');
 $form->addField('line','name');
 $form->addField('line','surname');
@@ -14,12 +14,48 @@ if($form->isSubmitted()){
 }
 <?/?>
 
+<?Example?>example 2
+$f=$page->add('Form');
+
+// email field
+$f->addField('line','email')
+    ->validateNotNull()
+    ->validateField('filter_var($this->get(), FILTER_VALIDATE_EMAIL)')
+    ;
+
+// Submit handling    
+$f->addSubmit('Check email');
+if($f->isSubmitted()){
+    $f->js()->univ()->alert('Email '.$f->get('email').' is valid')->execute();
+}
+
+// Application is safe from arbitary code injection, but validate input at will
+<?/?>
+
+<?Example?>example 3
+$f=$page->add('Form');
+
+// using multiple validations on a same field
+$f->addField('line','username')->validateNotNull()
+    ->validateField('preg_match("/^[a-z]+$/",$this->get())')
+    ->validateField('strlen($this->get())>=6','Too short')
+    ->validateField('20>=strlen($this->get())','Too long');
+
+$f->addField('password','pasword')->validateNotNull();
+$f->addSubmit('Login');
+
+if($f->isSubmitted()){
+    $f->js()->univ()->alert('[Demo] Login Successful')->execute();
+}
+<?/?>
+
+
 <h3>Form Elements</h3>
 
 <p>There are many field types you can use with form. In addition you can add your own field types or use add-on which may provide additional types.</p>
 
 
-<?Example?>
+<?Example?>field types
 $form=$page->add('Form');
 $form->addComment('This form shows all sorts of fields you can use by default');
 $form->addField('line','line');
@@ -45,7 +81,46 @@ $form->addSubmit();
 <p>The most convenient way to use form is to have it's fields populated from a Model.</p>
 
 
-<?Example?>
-$form=$page->add('Form');
+<?Example?>model 1
+$form = $page->add('Form');
 $form->setModel('Employee');
+$form->addSubmit();
 <?/?>
+
+<?Example?>model 2
+$f = $page->add('Form');
+
+// defining arary of fields to show and sequence order
+$f->setModel('Employee',array('name'));
+<?/?>
+
+<?Example?>model 3
+$model = $page->add('Model_Employee');
+$model->addCondition('salary','<=',3000);
+
+$f=$page->add('Form');
+
+$f->setModel($model,array('name','salary'));
+$f->getElement('salary')->setFieldHint('Must not exceed 3000');
+$f->addSubmit();
+
+$f->onSubmit(function($f){
+	try {
+		$f->update()->js()->univ()->successMessage('Saved with id='.$f->model->id)->execute();
+	}catch(Exception $e){
+		$f->js()->univ()->alert('Failed to add record')->execute();
+	}
+});
+
+<?/?>
+
+
+
+
+
+
+
+
+
+
+

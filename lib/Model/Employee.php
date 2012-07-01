@@ -8,7 +8,7 @@ class Model_Employee extends Model_Person {
 			->datatype('int');
 
 		$this->addField('salary')
-			->mandatory(true)
+			->mandatory('Salary is required')
 			->datatype('money');
 
 	}

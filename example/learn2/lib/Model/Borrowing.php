@@ -6,7 +6,7 @@ class Model_Borrowing extends Model_Table {
 		
 		$this->hasOne('Book');
 		$this->hasOne('Member');
-		$this->hasOne('Staff','verified_by');
+		$this->hasOne('Staff','verified_by')->sortable(true);
 
 		$this->addField('borrowed')->type('date')->defaultValue(date('Y-m-d'));
 

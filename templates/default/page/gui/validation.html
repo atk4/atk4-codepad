@@ -1,0 +1,50 @@
+<h2>Form Validation Examples</h2>
+
+<?Example?>example 1
+$f=$page->add('Form');
+
+$f->addField('line','email')
+    ->validateNotNull()
+    ->validateField(
+        'filter_var($this->get(), FILTER_VALIDATE_EMAIL)');
+
+$f->addSubmit();
+<?/?>
+
+<?Example?>example 2
+$f=$page->add('Form');
+
+$f_email=$f->addField('line','email')
+    ->validateNotNull();
+
+$f->addSubmit();
+if($f->isSubmitted()){
+	// manually displaying error message
+    if($f->get('email')=='test@example.com'){
+        return $f_email->displayFieldError('Choose other email');
+    }
+}
+<?/?>
+
+<?Example?>example 3
+$f=$page->add('Form');
+
+$f_email=$f->addField('line','email')
+    ->validateNotNull();
+
+// Adding validation hook through closure
+$f_email->addHook('validate',function() use ($f_email){
+    if($f_email->get()=='test@example.com')
+        $f_email->displayFieldError('Choose other email');
+});
+
+$f->addSubmit();
+<?/?>
+
+<?Example?>example 4
+$f=$page->add('Form');
+
+// JavaScript-based validation
+$f->addField('line','age')->js(true)
+    ->univ()->numericField();
+<?/?>

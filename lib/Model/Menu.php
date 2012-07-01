@@ -1,11 +1,11 @@
 <?php
 class Model_Menu extends hierarchy\Model_Array {
     /** Convert array into proper format */
-    function convertArray($array){
+    function convertArray($array,$prefix=''){
         $res=array();
         foreach($array as $key=>$row){
             $r=array(
-                'page'=>$key,
+                'page'=>$this->api->url($prefix.$key),
                 'name'=>$row
             );
 
@@ -13,7 +13,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 $r['children']=$r['name'];
                 $r['name']=array_shift($r['children']);
             }
-            if($r['children'])$r['children']=$this->convertArray($r['children']);
+            if($r['children'])$r['children']=$this->convertArray($r['children'],$prefix.$key.'/');
 
             $res[]=$r;
         }
@@ -23,12 +23,12 @@ class Model_Menu extends hierarchy\Model_Array {
         parent::init();
 
         $this->setSource($this->convertArray(array(
-            'about'=>'About This Site',
+            'index'=>'About This Site',
 
             'gui'=>array(
                 'User Interface',
-                'form'=>'Form',
-                'grid'=>'Grid',
+                'form'=>'Forms',
+                'grid'=>'Grids',
                 'buttons'=>'Buttons',
                 'upload'=>'File Uploads',
             ),
