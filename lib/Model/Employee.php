@@ -10,6 +10,7 @@ class Model_Employee extends Model_Person {
 		$this->addField('salary')
 			->mandatory(true)
 			->datatype('money');
+
 	}
 	function gotoWork(){
 		$this->set('days_worked',

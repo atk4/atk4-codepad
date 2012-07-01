@@ -8,10 +8,12 @@ class page_editablef extends Page {
 $this->add('View_Error')->set('inline fields are currently not working properly.');
 
 		$this->g=$g = $this->add('Grid');
-		$g->addColumn('inline','name');
-		$g->addColumn('inline','email');
-		$g->addColumn('expander','comments');
-		$g->setSource('movie');
+		//$g->addColumn('grid/inline','name');
+		//$g->addColumn('grid/inline','email');
+		//$g->addColumn('expander','comments');
+		$g->setModel('Employee');
+		$g->addFormatter('name','grid/inline')->editFields(array('name','salary'));
+//		$g->addFormatter('salary','grid/inline');
 	}
     function page_comments(){
         $this->add('Text')->set('id='.(int)$_GET['id']);
