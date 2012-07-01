@@ -5,14 +5,15 @@ class page_editablef extends Page {
         a time. For more complex edits, you can use expanders';
 	function page_index(){
 
-$this->add('View_Error')->set('inline fields are currently not working properly.');
-
 		$this->g=$g = $this->add('Grid');
+		$this->g->addTotals();
 		//$g->addColumn('grid/inline','name');
 		//$g->addColumn('grid/inline','email');
 		//$g->addColumn('expander','comments');
 		$g->setModel('Employee');
 		$g->addFormatter('name','grid/inline')->editFields(array('name','salary'));
+		$g->makeSortable();
+		$g->getColumn('name')->makeSortable();
 //		$g->addFormatter('salary','grid/inline');
 	}
     function page_comments(){
