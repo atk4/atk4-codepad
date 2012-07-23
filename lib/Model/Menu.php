@@ -43,6 +43,10 @@ class Model_Menu extends hierarchy\Model_Array {
                 'reloading'=>'Dynamic pages and AJAX',
                 'binding'=>'JavaScript Bindings',
             ),
+            'model'=>array(
+                'Using Models',
+                'def'=>'Defining Models',
+            ),
             /*
             'features'=>array(
                 'Advanced Features',
