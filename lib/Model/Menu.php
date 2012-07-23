@@ -28,9 +28,10 @@ class Model_Menu extends hierarchy\Model_Array {
             'gui'=>array(
                 'User Interface',
                 'form'=>'Forms',
+                'formstyle'=>'Form Styling',
                 'grid'=>'Grids',
-                'buttons'=>'Buttons',
-                'upload'=>'File Uploads',
+                //'buttons'=>'Buttons',
+                //'upload'=>'File Uploads',
             ),
             'layouts'=>array(
                 'Changind Layout and Design',
@@ -40,7 +41,9 @@ class Model_Menu extends hierarchy\Model_Array {
             'interaction'=>array(
                 'Interaction and JavaScript',
                 'reloading'=>'Dynamic pages and AJAX',
+                'binding'=>'JavaScript Bindings',
             ),
+            /*
             'features'=>array(
                 'Advanced Features',
                 'custom-form-fields'=>'Custom Form Fields',
@@ -66,6 +69,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 'password-strength'=>'Testing Password Strength',
                 'jqgrid'=>'Integration with jqGrid',
             ),
+             */
             'old'=>array(
                 'Older Examples',
                 '50employees'=>'50employees',
@@ -79,13 +83,12 @@ class Model_Menu extends hierarchy\Model_Array {
                 'facebook'=>'facebook',
                 'hangman'=>'hangman',
                 'hello'=>'hello',
-                'hybrid'=>'hybrid',
                 'image'=>'image',
-                'index'=>'index',
                 'infiniteadd1'=>'infiniteadd1',
                 'issue12'=>'issue12',
                 'jsonac'=>'jsonac',
                 'layoutswitch'=>'layoutswitch',
+                /*
                 'metatags'=>'metatags',
                 'multiupload'=>'multiupload',
                 'myformat'=>'myformat',
@@ -101,6 +104,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 'stackcrud'=>'stackcrud',
                 'tmail'=>'tmail',
                 ''=>'',
+                 */
                 )
             )));
 }

@@ -1,5 +1,5 @@
 <?php
-class page_dragaction extends Page {
+class page_old_dragaction extends Page {
     public $descr='Using custom view with a custom template to display your own HTML and even enable drag and drop. Agile
         Toolkit helps you even if you build your own components. Here we also specify a custom JavaScript which uses
         univ().ajaxec() to send data back to the server.';

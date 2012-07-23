@@ -1,5 +1,5 @@
 <?php
-class page_buttonpushing extends Page {
+class page_old_buttonpushing extends Page {
     public $descr='Sample demonstration on how to use buttons and how to use events. First button relads itself when clicked.
         Second button perfoms animation withotu consulting server. Third button send request to server to receive instructios
         to do the animation. Those are 3 major interaction styles you\'ll use in your application.';

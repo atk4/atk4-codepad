@@ -1,5 +1,5 @@
 <?php
-class page_50employees2 extends Page {
+class page_old_50employees2 extends Page {
     public $descr='After I created <a href="/codepad/50employees">50employees example</a> next I was asked what if we want to change
         salaries of the employees who already in the database? This example demonstrates use of autocomplete fields and also
         how you can add dictionary for a reference field. This allows you to automatically fill other fields when value is

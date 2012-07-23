@@ -1,10 +1,12 @@
 <?php
-class page_autocomplete extends Page {
+class page_old_autocomplete extends Page {
     public $descr='Selecting element in autocomplete field then editing loaded data (or creating new one if it wasn\'t
             selected can be implemented by using two forms. The first form only allows you to change the name of the record,
             then it submits itself and reloads second form.';
     function init(){
         parent::init();
+
+        $this->add('View_Error')->set('The autocomplete is going reconstruction and will re-emerge as new add-on');
 
         $form=$this->add('Form');
         $name=$form->addField('autocomplete','name','Employee')->setModel('Employee');

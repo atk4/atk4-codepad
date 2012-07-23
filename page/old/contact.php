@@ -1,5 +1,5 @@
 <?php
-class page_contact extends Page {
+class page_old_contact extends Page {
     public $descr='How hard should it be to create a contact form? With Agile Toolkit it\'s super easy. Here is your only step to creating it.';
 	function init(){
 		parent::init();

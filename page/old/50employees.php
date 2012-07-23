@@ -1,5 +1,5 @@
 <?php
-class page_50employees extends Page {
+class page_old_50employees extends Page {
     public $descr='The other day I got asked: "I have lots of employees to enter. What\'s the fastest name to enter them?".
         We can certainly build a form with lots of fields and the make it produce many records when it\'s submitted.';
 	function init(){

@@ -1,6 +1,6 @@
 <?php
 
-class page_facebook extends Page {
+class page_old_facebook extends Page {
     public $descr = 'An example of Facebook authorization integration and profile data fetching';
     function init(){
         parent::init();

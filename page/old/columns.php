@@ -1,5 +1,5 @@
 <?php
-class page_columns extends Page {
+class page_old_columns extends Page {
     public $descr='Design of complex forms with a non-standard layout often can be done with existing components of Agile
         Toolkit. In the form below you will see a lot of techniques in action to perform AJAX reuests, insert non-standard
         fields into the form and interraction between multiple forms';
