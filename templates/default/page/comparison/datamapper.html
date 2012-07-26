@@ -1,0 +1,517 @@
+<h1>Introduction to Agile Toolkit ORM for those familiar with DataMapper ORM (CodeIgniter)</h1>
+
+<p>DataMapper in CodeIgniter relies on Database Normalization Third normal form. Agile Toolkit does not rely or make any asumption
+	about your database structure allowing you to use much more efficient structure for your given task.</p>
+
+<p>Disclaimer: This version compares first version of DataMapper. Version 2.0 is in the works, when it's stable I will update this article.</p>
+
+<h3>Defining Model</h3>
+<p>Similarly to DM you should create a new class to define a new model. In Agile Toolkit, however, you would perform
+	a series of a method calls to register fields instead of relying on array structure. For example:
+
+<?Code?>DataMapper - Model Definition
+class User extends DataMapper {
+
+    var $has_many = array('book');
+    var $has_one = array('country');
+
+    var $validation = array(
+        'username' => array(
+            'label' => 'Username',
+            'rules' => array('required', 'min_length'=>3, 'trim', 'alpha_dash', 'max_length' => 20),
+        ),
+    )
+}
+<?/?>
+<?Code?>Agile Toolkit - Model Definition
+class Model_User extends Model_Table {
+	public $table='user';
+	function init(){
+		parent::init();
+		$this->hasMany('Book');
+		$this->hasOne('Country');
+
+		$this->addField('username')
+			->caption('Username')
+			->mandatory(true);
+
+		$this->addHook('beforeSave',$this);
+	}
+	function beforeSave(){
+		if(strlen($this['username'])<3)throw $this->exception('Too short')->setField('username');
+		if(strlen($this['username'])>20)throw $this->exception('Too long')->setField('username');
+		if(!preg_match('/[a-zA-Z0-9]*/',$this['username']))throw 
+			$this->exception('Must contain alphanumeric characters only')->setField('username');
+		$this['username']=trim($this['username']);
+	}
+}
+<?/?>
+<p>The implementation of model in Agile Toolkit focus on flexibility but does not provide rule support out of the box. The 
+	similar condition check can be achieved through exceptions and will be translated into interface errors.</p>
+
+<p>Certainly any modifications of the fields can be executed in a similar manner.</p>	 
+
+<h3>Manipulating records</h3>
+<?Code?>DataMapper - Record Manipulation
+$u=new User();
+$u->username='Fred Smith';
+$u->password='Apples';
+$u->save();
+echo $u->id;
+<?/?>
+<?Code?>Agile Toolkit - Record Manipulation
+$u=$this->add('Model_User');
+$u['username']='Fred Smith';
+$u['password']='Apples'
+$u->save();
+echo $u->id;
+<?/?>
+
+<p>Agile Toolkit model object support array-access, which makes it possible for you to use it as an array. The last line
+	taking the "id" property value is is differently. Regardles of the name of ID field ($u['user_id']), the property
+	name will always remain "id".</p>
+
+<?Code?>DataMapper - Record Access
+$b=new Book();
+$b->limit(5)->get();
+
+echo $b->name; // first user
+foreach($b as $book){
+	echo $book->name
+}
+<?/?>
+<?Code?>Agile Toolkit - Record Access
+$b=$this->add('Model_Book')
+foreach($b as $junk){
+	echo $b['name'];
+}
+<?/?>
+<p>Iterating records in Agile Toolkit is different. There is no need to explicitly execute query, it will be executed
+	when iterating begins. The $junk variable will be initialized into an array of current element, but it's much more
+	convenient to simply address the same object as it will also reflect the currently loaded entry.</p>
+
+<p>Also you must note that models in Agile Toolkit do not implement the "limit" as it is a SQL feature. It can still be
+used on DSQL level like this:</p>	
+<?Code?>Agile Toolkit - Limit 1
+$b->_dsql()->limit(5);
+<?/?>
+<p>Or whole example can be written like this</p>
+<?Code?>Agile Toolkit - Record Access
+$b=$this->add('Model_Book')
+foreach($b->dsql()->limit(5) as $book){
+	echo $book['name'];
+}
+<?/?>
+
+
+<?Code?>DataMapper - Relating
+$u->save($b->all);
+<?/?>
+<p>Agile Toolkit is much more conservative in the way how relations work. It supports various direct relations between tables.
+	In other words for the above to work, you would need to have "user_id" field in your book table:</p>
+
+<?Code?>Agile Toolkit - Relating
+$b->dsql()->set('user_id',$u->id)->update();
+<?/?>
+
+<?Code?>DataMapper - Conditioning
+$b=new Book();
+$b->where('year',2000)->get();
+<?/?>
+<?Code?>Agile Toolkit - Conditioning
+$b=$this->add('Model_Book');
+$b->addCondition('year',2000);
+<?/?>
+
+<h3>Traversing</h3>
+
+<?Code?>DataMapper - Traversing
+$u->book->get();
+echo $u->book->id;
+<?/?>
+<?Code?>Agile Toolkit - Traversing
+foreach($book=$u->ref('Book') as $junk){
+	echo $book->id;
+	echo $book['name'];
+}
+<?/?>
+
+<p>Agile Toolkit creates a new model when traversin with applied conditions. In this case "book" is a model and it can be traversed easily.</p>
+
+<p>By Nature DataMapper uses many-to-many relations through intermediate table. The same can be done with Agile Toolkit but with some more magic.</p>
+
+
+<?Code?>Agile Toolkit - Many to Many
+class Model_User() extends Model_Table{
+	public $table='user';
+	function init(){
+		parent::init();
+		$this->addField('username')
+			->caption('Username')
+			->mandatory(true);
+
+		$this->hasMany('RelatedBook');
+	}
+}
+class Model_Book() extends Model_Table{
+	public $table='book';
+	function init(){
+		parent::init();
+		$this->addField('name')
+			->mandatory(true);
+
+		$this->hasMany('RelatedUser');
+	}
+}
+class Model_RelatedBook extends Model_Book{
+	function init(){
+		parent::init();
+		$this->join('user_book.book_id');
+	}
+}
+class Model_RelatedUser extends Model_User{
+	function init(){
+		parent::init();
+		$this->join('user_book.user_id');
+	}
+}
+class Model_UserBook extends Model_Table{
+	function init(){
+		parent::init();
+		$this->hasOne('Book');
+		$this->hasOne('User');
+	}
+}
+<?/?>
+
+<p>With the following class setup we can now have many-to-many relations:</p>
+
+<?Code?>Agile Toolkit - Traversing
+$u=$this->add('Model_User');
+$u['username']='john';
+$u->ref('RelatedBook')->set('name','My Book')->save();	// adds book record and user_book record
+
+// To link 2000 year book with one user
+$u=$this->add('Model_User')->loadAny();
+$b=$this->add('Model_Book')->addCondition('year',2000);
+$ub=$this->add('Model_UserBook');
+
+foreach($b as $junk){
+	$ub['user_id']=$u->id;
+	$ub['book_id']=$b->id;
+	$ub->saveAndUnload();
+}
+<?/?>
+
+<p>With many-to-many implementation in Agile Toolkin, adding relations can no longer rely on multi-table update statement.
+	I strongly encourage you to carefully plan your database structure to avoid any inefficiency and fully take advantage
+	of your database capabilities.</p>
+
+<p>When compared with DataMapper, Agile Toolkit model has a much more flexible database relation support, but it may
+	require developer to write code in more details sometime. Actions performed by Agile Toolkit are more atomic.</p>
+
+<p>Agile Toolkit also has no limitation to field names or table names, anything can be used. <a href="/doc/modeltable">There are many other cool features
+	to Agile Toolkit models</a>.</p>
+
+
+<h2>Conditioning and Queries</h2>	
+<?Code?>DataMapper - Query Building
+$u=new User();
+$u->get(10,20);	// sets limit
+
+$u->select('title, description');
+
+$u->get_where(array('id'=>$id));
+<?/?>
+
+<?Code?>Agile Toolkit - Query Building
+$uq=$this->add('Model_User')->dsql();
+$uq->limit(10,20);
+
+$uq->field('title');
+
+$uq->where('id',$id);
+
+$uq->field('description');
+
+<?/?>
+
+<p>Agile Toolkit is much more flexible allowing multiple calls to "where" and "field". Query does not need to be
+	made explicitly.</p>
+
+<h2>Functions</h2>
+
+
+<?Code?>DataMapper - Functions
+$u->select_min('age','min_age');
+
+$u->select_avg('age','average_age');
+<?/?>
+
+<?Code?>Agile Toolkit - Query Building
+
+$uq->field($uq->expr('max(age)'),'average_age');
+$uq->field($uq->expr('min(age)'),'min_age');
+<?/?>
+
+<p>Agile Toolkit syntax for field() is much more diverse and supports use of subqueries, expressions and more.
+	It also escapes field names and adds parameter for variables</p>
+
+<h2>Functions</h2>
+
+
+<?Code?>DataMapper - Conditions
+$u=new User();
+$u->where('name',$name);
+$u->where('age > ', $age);
+
+$u->where('name="Joe" and status="boss");
+
+$u->where_in('id',$id_list);
+<?/?>
+
+<?Code?>Agile Toolkit - Conditions
+$uq=$this->add('Model_User')->dsql();
+$uq->where('name',$name);
+$uq->where('age>',$age);	// no spaces. You can use 3-argument format too, 'age','>',$age
+
+$uq->where($uq->expr('name="Joe" and status="boss"'));	// allow custom expressions
+
+// but OR is supported too 
+$uq->where($uq->orExpr()->where('name','Joe')->where('status','boss'));
+
+$uq->where('id','in',$id_list);
+<?/?>
+
+
+<h2>Condition Groups</h2>
+<p>DataMapper supports and, or, not and or-not groups. Agile Toolkit allows use of expressions to have a nested conditions,
+	which offers an another pratcal approach</p>
+
+<?Code?>Agile Toolkit - Condition Grouping
+$uq=$this->add('Model_User')->dsql();
+$uq->where(
+	$ug->orExpr()
+		->where('a',true)
+		->where($ug->expr('[where'])
+			->where('b',true')
+			->where('c',true);
+		)
+	);
+	// where a=true or (b=true and c=true);
+
+	// TODO: might not work
+<?/?>
+
+
+<h2>Result Grouping</h2>
+<?Code?>DataMapper - Grouping
+$u=new User();
+$u->having('user_id',45);
+$u->group_by('gender');
+$u->order_by('age');
+<?/?>
+
+<?Code?>Agile Toolkit - Conditions
+$uq=$this->add('Model_User')->dsql();
+$uq->group('genter');
+$uq->order('age');
+<?/?>
+
+<h2>Related Querying</h2>
+
+<p>As the queries become more complex, Agile Toolkit starts to show some unique features</p>
+<?Code?>DataMapper - Traversing
+$u = new User();
+$u->where('gender', 'M')->get();
+
+// Get all the messages these males have posted
+$p = new Post();
+$p->where_related('user', 'id', $u)->get();
+<?/?>
+
+<?Code?>Agile Toolkit - Traversing
+$u = $this->add('Model_User')
+$u->addCondition('gender', 'M');
+
+$u->hasMany('Post');
+
+$p = $u->ref('Post','user');
+// Will set condition on "user" field to match users with gender M
+<?/?>
+
+<p>Agile Toolkit uses a sub-query when you will iterate through posts and will not retrieve list of users.
+	With Agile Toolkit you can traverse further, but manual conditioning is also possible. In fact any
+condition in Agile Toolkit can be expressed by a different query or can even relate to original model</p>
+
+<?Code?>DataMapper - Deep Relations (joins)
+$u = new User();
+$u->where_related('project/task/status', 'label', 'completed');
+$u->include_related('project/task/name', 'project_name');
+$u->get();
+<?/?>
+
+<?Code?>Agile Toolkit - Deep Relations (joins)
+$u = $this->add('Model_User')
+$task_j = $u
+	->join('projects_users.user_id')
+	->join('projects')
+	->join('task.projects_id');
+
+$status_j = $task_j	
+	->join('statuses','status_id');
+
+$task_j->addField('project_name','name');
+$task_j->addField('project_code','code');
+$status_j->addfield('status','label');
+
+$u->addCondition('label','completed');
+<?/?>
+<p>The above Agile Toolkit code would perform a join between multiple tables and import certain fields into the
+	model. The fields are handy because they behave as a regular fields, for example, you can query, set and update
+	them and set conditions like demonstrated.</p>
+
+<h2>Subqueries</h2>
+<?Code?>DataMapper - Deep Relations (joins)
+$u = new User();
+$bugs = $u->bug;
+
+// Select the number of open bugs for a user
+// Build the subquery - but don't call get()!
+$bugs->select_func('COUNT', '*', 'count')
+$bugs->where_related_status('closed', FALSE)
+$bugs->where_related('user', 'id', '${parent}.id');
+
+// add to the users query
+$u->select_subquery($bugs, 'bug_count');
+$u->get();
+<?/?>
+
+<?Code?>Agile Toolkit - Subqueries
+$u = $this->add('Model_User')
+
+$u->hasMany('Bugs','opened_by');
+
+$u->addExpression('closed_bug_count')->set($u->refSQL('Bugs')->addCondition('closed',true)->count());
+
+// accessing data
+echo $u->loadAny()->get('closed_bug_count');
+<?/?>
+
+<p>Agile Toolkit also allows you to build additional conditions on related fields:
+<?Code?>Agile Toolkit - Subqueries
+$u = $this->add('Model_User')
+
+$u->hasMany('Bugs','opened_by');
+
+$u->addExpression('closed_bug_byme')->set($u->refSQL('Bugs')
+	->addCondition('closed_by',$u->getElement('id'))
+	->addCondition('closed',true)->count()
+);
+
+// accessing data
+echo $u->loadAny()->get('closed_bug_count');
+<?/?>
+
+<p>And to avoid cyclic references, you can use callback function</p>
+<?Code?>Agile Toolkit - Subqueries
+$u = $this->add('Model_User')
+
+$u->hasMany('Bugs','opened_by');
+
+$u->addExpression('closed_bug_byme')->set(function($u,$q){ 
+	return $u->refSQL('Bugs')
+		->addCondition('closed_by',$u->getElement('id'))
+		->addCondition('closed',true)->count()
+});
+
+// accessing data
+echo $u->loadAny()->get('closed_bug_count');
+<?/?>
+
+<p>The fundamental rule of Agile Toolkit is that the complexity of the ORM is always constant. In other words you will
+	have no performance degradation if you have LOTS of data in your tables because of ORM.</p>
+
+<h3>Cloning and copying</h3>
+
+<p>Agile Toolkit DSQL objects are Clone safe. Models are also safe with the exception of hooks. A system-wide method
+	"newInstance" is a good alternative to cloning, which will reinitialize object with the same class.</p>
+
+
+<?Code?>DataMapper - Cloning
+$u = new User();
+$u->where_related('group', 'name', 'Administrators');
+
+$u2 = $u->get_clone(TRUE); // force a clone of the DB object
+$u2->where('id <', 3);
+
+$u->get(); // contains all Admins
+$u2->get(); // contains only the Admins whose ID is less than 3
+<?/?>
+
+<?Code?>Agile Toolkit - Cloning
+$u=$this->add('Model_User');
+$u->addCondition('group_id','in',
+	$this->add('Model_Group')->addCondition('name','Administrator')->dsql()->field('id')
+);
+
+$u2 = clone $u;
+$u2->addCondition('id<',3);
+
+// $u contains all admins
+// $u2 contains all admins with id < 3
+<?/?>
+
+
+<h3>Updating</h3>
+
+<?Code?>DataMapper - Updating
+$group = new Group();
+$group->where('name', 'Administrators')->get();
+// You only need to select the ID column, however the select() is optional.
+$group->user->select('id')->get();
+$group->user->update_all('is_all_powerful', TRUE);
+<?/?>
+
+<?Code?>Agile Toolkit - Updating
+$group=$this->add('Model_Group');
+$group->addCondition('name','Administrator');
+$user = $group->ref('User');
+
+$user->dsql()->set('is_all_powerful',1)->update();
+<?/?>
+
+<p>Agile Toolkit have no problem in using sub-query conditions on updates or deletes, therefore everything is consistent. 
+
+<?Code?>DataMapper - Updating expr
+$pet = new VirtualPet();
+$pet->update(array('hunger' => 'hunger + 1', 'tiredness' => 'tiredness + 1'), FALSE);
+<?/?>
+
+<?Code?>Agile Toolkit - Updating expr
+$pet=$this->add('Model_VirtualPet');
+$pet->dsql()->set('hunger=hunger+1')->set('tiredness=tiredness+1')->update();
+<?/?>
+
+
+<h2>Bottom-line</h2>
+
+<p>Agile Toolkit operates dynamically with queries which are based on templates, expressions,
+	recursion and parametric arguments (for PDO). The amount of methods in Agile Toolkit ORM is significantly
+	less and overall it implements a much simpler architecture, less use-cases. The flexibility of a 
+	DSQL class is used by a Model for building queries and both objects are able to interact during traversal,
+	joins etc.</p>
+
+<p>Any conditions, queries, traversals or expressions in Agile Toolkit can be called subsequently producing
+	multiple indepentend modifications to the query. You can even join same table several times or have
+	several differen relations between same tables. Practically most of the functionality of DataMapper
+	is present in Agile Toolkit but with much more clarity and simpler learning.</p>
+
+<p>Finally Agile Toolkit models are fully compatible with all the UI Views of Agile Toolkit, so regardless of your
+	model configuration, number of joins, expressions you are using, you can always use it with Grid to
+	list results and you can always paginate it, add quick-search without no worries of compatibility.</p>
+
+<p>Controllers in Agile Toolkit can further narrow down conditions or extend fields and behaviour of your models.
+	Everything is done transparently and without conflicts.</p>	
+
+	

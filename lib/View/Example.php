@@ -40,7 +40,7 @@ class View_Example extends View {
         $res=$this->executeDemo($code);
 
         if($silent===true){
-            $res->destroy();
+            if($res)$res->destroy();
             $this->template->del('has_demo');
         }
         return $this;

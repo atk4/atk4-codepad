@@ -62,12 +62,14 @@ class Model_Menu extends hierarchy\Model_Array {
                 'sub-selector'=>'Country and State',
                 'entry-form'=>'Data-entry soltions',
             ),
+            */
             'comparison'=>array(
                 'ATK4 vs [other framework]',
-                'zend'=>'Zend Framework',
-                'code-igniter'=>'Code Igniter',
-                'koolphp'=>'KoolPHP',
+                'datamapper'=>'CI DataMapper ORM',
+                //'code-igniter'=>'Code Igniter',
+                //'koolphp'=>'KoolPHP',
             ),
+            /*
             'addons'=>array(
                 'Add-ons',
                 'password-strength'=>'Testing Password Strength',
