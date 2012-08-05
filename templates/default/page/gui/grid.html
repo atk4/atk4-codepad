@@ -55,3 +55,35 @@ $grid->setModel('Employee');
 $grid->addPaginator(3);
 $grid->addQuickSearch(array('name'));
 <?/?>
+
+<h3>Adding Popup buttons</h3>
+
+<p>You can add a custom field which resembles a button and assign action to it with Grid:</p>
+
+<?Example?>Grid Button
+$grid=$page->add('Grid');
+$grid->setModel('Employee');
+$grid->model->_dsql()->limit(5);
+$grid->addColumn('button','details');
+
+if($_GET['details']){
+	// this generates javascript to be executed on buttion click
+	$grid->js()->univ()
+		->frameURL('Details Title',$page->api->url(null,array('keyword'=>123,'id'=>$_GET['details'])))
+		->execute();
+}
+
+if($_GET['keyword']){
+
+	// If you are expecting furter queries from below, make sure to make arguments sticky
+	$page->api->stickyGET('keyword');
+	$page->api->stickyGET('id');
+
+	$form=$page->add('Form');
+	$form->setModel('Employee')->loadData($_GET['id']);
+	$form->js(true)->find('input')->attr('disabled',true);
+
+	// Enforce rendering only of this object
+	$_GET['cut_object']=$form->name;
+}
+<?/?>
