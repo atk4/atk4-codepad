@@ -87,3 +87,21 @@ if($_GET['keyword']){
 	$_GET['cut_object']=$form->name;
 }
 <?/?>
+
+<p>The button in Agile Toolkit Grid automatically binds a call-back which passes in the ID value. When you retrieve that request, you can send any javascript to the front page instructing it to either re-load the grid, open a popup or go to a different page. The action can be even decided on the record basis, such as some records can be automatically deleted and grid reloaded, other records may display a confirmation window.</p>
+
+<p>You may wonder how to avoid this extra request if you do know what's needed. In this case you need to put a bit of your own javascript on a button-shaped column.</p>
+
+
+<?Example?>Grid MyButton
+$grid=$page->add('Grid');
+$grid->setModel('Employee');
+$grid->model->_dsql()->limit(5);
+$grid->addColumn('template','details')->setTemplate('<button type="button" class="mybutton">ClickMe</button>');
+
+$grid->js(true)->_selector('#'.$grid->name.' .mybutton')
+	->button();
+$grid->js('click')->_selector('#'.$grid->name.' .mybutton')
+	->univ()
+	->dialogOK('Yey','Some custom javascript action here');
+<?/?>
