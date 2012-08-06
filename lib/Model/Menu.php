@@ -30,7 +30,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 'form'=>'Forms',
                 'formstyle'=>'Form Styling',
                 'grid'=>'Grids',
-                //'buttons'=>'Buttons',
+                'validation'=>'Form Validation',
                 //'upload'=>'File Uploads',
             ),
             'layouts'=>array(

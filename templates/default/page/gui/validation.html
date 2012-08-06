@@ -15,7 +15,8 @@ $f->addSubmit();
 $f=$page->add('Form');
 
 $f_email=$f->addField('line','email')
-    ->validateNotNull();
+    ->validateNotNull()
+    ->set('test@example.com');
 
 $f->addSubmit();
 if($f->isSubmitted()){
@@ -30,7 +31,8 @@ if($f->isSubmitted()){
 $f=$page->add('Form');
 
 $f_email=$f->addField('line','email')
-    ->validateNotNull();
+    ->validateNotNull()
+    ->set('test@example.com');
 
 // Adding validation hook through closure
 $f_email->addHook('validate',function() use ($f_email){
