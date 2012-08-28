@@ -6,6 +6,6 @@ class page_old_infiniteadd1 extends Page {
 
 	function init(){
 		parent::init();
-		$this->add('InfiniteAddForm')->setModel('Employee');
+		$this->add('misc/InfiniteAddForm')->setModel('Employee');
 	}
 }
