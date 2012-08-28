@@ -98,10 +98,51 @@ $grid=$page->add('Grid');
 $grid->setModel('Employee');
 $grid->model->_dsql()->limit(5);
 $grid->addColumn('template','details')->setTemplate('<button type="button" class="mybutton">ClickMe</button>');
+$grid->columns['details']['thparam'].=' style="width: 40px; text-align: center"';
 
 $grid->js(true)->_selector('#'.$grid->name.' .mybutton')
 	->button();
 $grid->js('click')->_selector('#'.$grid->name.' .mybutton')
 	->univ()
 	->dialogOK('Yey','Some custom javascript action here');
+<?/?>
+
+<h3>Grid support for Addons</h3>
+
+<p>Addon allows to build extensions for Grid columns. This extension demonstrates how to create a new column type which would open a pop-up window to a new page. If you wish to use this addon, please place the code inside atk4-addons/grid/lib/Grid/Format/popup.php (case sensitive):</p>
+
+<?Example?>Grid Addons
+namespace grid;
+class Controller_Grid_Format_popup extends \AbstractController {
+	public $label, $descr, $page;
+	function initField($field, $description){
+		$grid=$this->owner;
+		$this->label=$this->descr=$description;
+		$this->page='./'.$field;
+		$grid->js(true)->_selector('#'.$grid->name.' .button_'.$field)
+			->button();
+
+		$grid->js('click')->_selector('#'.$grid->name.' .button_'.$field)
+			->univ()
+			->frameURL($description,array($this->api->url($this->page),
+				$grid->model->id_field=>$grid->js()
+					->_selectorThis()
+					->closest('tr')
+					->attr('data-id')));
+
+
+		$grid->columns[$field]['thparam'].=' style="width: 40px; text-align: center"';
+	}
+	function formatField($field){
+		$grid=$this->owner;
+		$grid->current_row_html[$field]='<button type="button" class="button_'.$field.'">'.$this->label.'</button>';
+	}
+}
+
+$grid=$page->add('Grid');
+$grid->setModel('Employee');
+$grid->model->_dsql()->limit(5);
+$grid->addColumn('grid/popup','details');
+$grid->addColumn('grid/popup','test');
+
 <?/?>
