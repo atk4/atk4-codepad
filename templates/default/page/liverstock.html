@@ -1,0 +1,73 @@
+<h1>Self-referencing model</h1>
+
+<p>If you need to create a model which can reference itself and also pass along some arguments, here is how you can do it. First let's describe the situation.</p>
+
+<?Code?>example 1
+class Model_Livestock extends Model_table {
+    public $table='livestock';
+    function init(){
+        parent::init();
+        
+        $this->addField('name');
+        $this->addField('type')->enum(array('pig','sheep','goat'));
+        $this->addField('sex')->listData(array("m"=>"Male","f"=>"Female"));
+        $this->addField('sire_id')->caption('Male Parent');
+        $this->addField('dam_id')->caption('Female Parent');
+    }
+}
+<?/?>
+
+<p>Suppose we have a CRUD which needs to edit all the animals of certain type. The question is - how to limit the available values in the drop-downs to only include the proper type?</p>
+
+<p>Normally, when calling hasOne() you need to pass a class name as an argument. However in our situation, there are simply no such class. If we would create the classes, there would be too many.
+Instead we would like to create a new model instance and simply specify it. This is very risky as we might run into recursion, so we need to do it carefully.</p>
+
+<?Example?>example 2
+class Model_Livestock extends Model_table {
+    public $table='livestock';
+    public $type=null;
+    function init(){
+        parent::init();
+        
+        $this->addField('name');
+        $this->addField('type')->enum(array('pig','sheep','goat'));
+        $this->addField('sex')->listData(array("m"=>"Male","f"=>"Female"));
+        $this->hasOne('Livestock','sire_id')->caption('Male Parent');
+        $this->hasOne('Livestock','dam_id')->caption('Female Parent');
+
+        $this->add('dynamic_model/Controller_AutoCreator');
+
+        if($this->owner->owner instanceof Model_Livestock && $this->owner->owner->type){
+            $this->addCondition('type',$this->owner->owner->type);
+        }elseif($this->type){
+            $this->addCondition('type',$this->type);
+        }
+        if($this->owner->short_name=='sire_id'){
+            $this->addCondition('sex','m');
+        }
+        if($this->owner->short_name=='dam_id'){
+            $this->addCondition('sex','f');
+        }
+        
+    }
+}
+
+$page->add('H2')->set('Pigs');
+$m=$page->add('Model_Livestock',array('type'=>'pig'));
+$page->add('CRUD')->setModel($m);
+
+$page->add('H2')->set('Sheeps');
+$m=$page->add('Model_Livestock',array('type'=>'sheep'));
+$page->add('CRUD')->setModel($m);
+<?/?>
+
+<p>Now when you add elements, they will properly use conditions, so how did it happen?</p>
+
+<p>First, I have moved "type" into a separate property. Properties can be set for an object by passing array as a second argument to add(). Then upon init() we can check 
+the type property and set a condition.</p>
+
+<p>When drop-down is created, it calls $model->getElement('sire_id')->getModel(). This model will use the model class name to create new object, but it uses
+add() method to create it. So the model designated for the dropdown drawing was added inside a field. A field is a Field_Reference type and it's 
+short_name corresponds to the field name. We use that fact to determine if the model have been added into the page (by $page->add()) or inside a field. If
+it's added inside the field, we can use can traverse the owner to get additional information about the original model type as well as set the gender
+appropriatelly for the field.</p>

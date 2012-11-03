@@ -1,6 +1,6 @@
 <?php
 class View_Example extends View {
-    function set($code,$silent=false){
+    function set($code,$silent=false,$noexec=false){
 
         $short=$this->short_name;
 
@@ -36,6 +36,10 @@ class View_Example extends View {
 
 
         if($_GET['cut'])return;
+        if($noexec){
+            $this->template->del('has_demo');
+            return;
+        }
 
         $res=$this->executeDemo($code);
 
