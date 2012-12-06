@@ -3,7 +3,7 @@
 <p>If you need to create a model which can reference itself and also pass along some arguments, here is how you can do it. First let's describe the situation.</p>
 
 <?Code?>example 1
-class Model_Livestock extends Model_table {
+class Model_Livestock extends Model_Table {
     public $table='livestock';
     function init(){
         parent::init();
@@ -23,7 +23,7 @@ class Model_Livestock extends Model_table {
 Instead we would like to create a new model instance and simply specify it. This is very risky as we might run into recursion, so we need to do it carefully.</p>
 
 <?Example?>example 2
-class Model_Livestock extends Model_table {
+class Model_Livestock extends Model_Table {
     public $table='livestock';
     public $type=null;
     function init(){

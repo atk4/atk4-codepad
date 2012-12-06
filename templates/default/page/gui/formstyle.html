@@ -33,7 +33,7 @@ class StylingForm extends Form {
             ->setProperty('cols',45)->setProperty('rows','5')
             ->validateField('5000>=strlen($this->get())','Too long');
 
-        $f->addField('radio','sex')
+        $f->addField('Radio','sex')
             ->setValueList(array('m'=>'Male','f'=>'Female'))
             ;  // automatically validated to be one of value list
 
