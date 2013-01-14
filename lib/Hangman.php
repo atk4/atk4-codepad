@@ -5,7 +5,7 @@ class Hangman extends HtmlElement {
 		if(!$_GET[$this->name]){
 			$this->add('H3')->set('Select Difficulty');
 			$f=$this->add('Form');
-			$f->addField('radio','difficulty')->setValueList(array(10=>'Easy',5=>'Medium',3=>'Hard'));
+			$f->addField('Radio','difficulty')->setValueList(array(10=>'Easy',5=>'Medium',3=>'Hard'));
 			$f->addSubmit('Start Game');
 			if($f->isSubmitted()){
 				$this->memorize('word','back');
