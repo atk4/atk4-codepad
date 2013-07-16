@@ -1,0 +1,93 @@
+<h1>jQueryUI Menu Example</h1>
+
+<p>
+    <div>
+        <a target="_blank" href="http://jqueryui.com/menu/">
+            More about jQueryUI Menu plugin
+        </a>
+    </div>
+    <div>
+        <a target="_blank" href="https://github.com/DarkSide666/ds-addons/tree/master/menu">
+            More about jQueryUI Menu plugin for ATK4
+        </a>
+    </div>
+</p>
+
+<?Example?>vertical
+$v = $page->add('View')->addStyle('min-height','150px');
+$v->add('menu/Menu_Dropdown')
+		->setType('vertical')	// horizontal|vertical (optional)
+		->setPosition('left')	// left|right (optional)
+		->addMenuItem('http://jqueryui.com/menu/','jQueryUI Menu')
+		->addMenuItem('https://github.com/DarkSide666/ds-addons/tree/master/menu','ATK4 Plugin')
+        ->sub()
+            ->addMenuItem('https://github.com/DarkSide666','Author')
+            ->addMenuItem('https://github.com/DarkSide666/ds-addons','Author\'s addons')
+            ->addMenuItem('https://github.com/DarkSide666/ds-addons/tree/master/menu','How to')
+        ->end()
+		->addMenuItem('index','Item 3')
+        ->sub()
+            ->addMenuItem('index','Item 3.1')
+            ->addMenuItem('index','Item 3.2')
+            ->sub()
+                ->addMenuItem('index','Item 3.2.1')
+                ->addMenuItem('index','Item 3.2.2')
+            ->end()
+        ->end()
+		->addMenuItem('index','Item 4')
+        ->sub()
+            ->addMenuItem('index','Item 4.1')
+            ->addMenuItem('index','Item 4.2')
+            ->sub()
+                ->addMenuItem('index','Item 4.2.1')
+                ->addMenuItem('index','Item 4.2.2')
+                ->sub()
+                    ->addMenuItem('index','Item 4.2.2.1')
+                    ->addMenuItem('index','Item 4.2.2.2')
+                    ->addMenuItem('index','Item 4.2.2.3')
+                ->end()
+            ->end()
+        ->end()
+;
+<?/?>
+
+<?Example?>horizontal
+$v = $page->add('View')->addStyle('min-height','50px');
+$v->add('menu/Menu_Dropdown')
+		->setType('horizontal')	// horizontal|vertical (optional)
+		->setPosition('left')	// left|right (optional)
+		->addMenuItem('http://jqueryui.com/menu/','jQueryUI Menu')
+		->addMenuItem('https://github.com/DarkSide666/ds-addons/tree/master/menu','ATK4 Plugin')
+        ->sub()
+            ->addMenuItem('https://github.com/DarkSide666','Author')
+            ->addMenuItem('https://github.com/DarkSide666/ds-addons','Author\'s addons')
+            ->addMenuItem('https://github.com/DarkSide666/ds-addons/tree/master/menu','How to')
+        ->end()
+		->addMenuItem('index','Item 3')
+        ->sub()
+            ->addMenuItem('index','Item 3.1')
+            ->addMenuItem('index','Item 3.2')
+            ->sub()
+                ->addMenuItem('index','Item 3.2.1')
+                ->addMenuItem('index','Item 3.2.2')
+            ->end()
+        ->end()
+		->addMenuItem('index','Item 4')
+        ->sub()
+            ->addMenuItem('index','Item 4.1')
+            ->addMenuItem('index','Item 4.2')
+            ->sub()
+                ->addMenuItem('index','Item 4.2.1')
+                ->addMenuItem('index','Item 4.2.2')
+                ->sub()
+                    ->addMenuItem('index','Item 4.2.2.1')
+                    ->addMenuItem('index','Item 4.2.2.2')
+                    ->addMenuItem('index','Item 4.2.2.3')
+                ->end()
+            ->end()
+        ->end()
+;
+<?/?>
+
+
+
