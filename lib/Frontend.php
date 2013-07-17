@@ -6,13 +6,22 @@ class Frontend extends ApiFrontend {
 	function init(){
 		parent::init();
 		$this->dbConnect();
-		$this->addLocation('atk4-addons',array(
-					'php'=>array(
-                        'mvc',
-						'misc/lib',
-						)
-					))
-			->setParent($this->pathfinder->base_location);
+
+        $this->pathfinder->addLocation('./',array(
+            'addons'=>array('atk4-addons','addons','ds-addons'),
+            'php'=>array('atk4-addons/mvc','atk4-addons/misc/lib'),
+//            'template'=>'atk4-addons/misc/templates',
+//            'js'=>array('js','templates/js'),
+        ));
+
+
+//		$this->addLocation('atk4-addons',array(
+//					'php'=>array(
+//                        'mvc',
+//						'misc/lib',
+//                    ),
+//                ))
+//			->setParent($this->pathfinder->base_location);
 
 		$this->add('jUI');
 
