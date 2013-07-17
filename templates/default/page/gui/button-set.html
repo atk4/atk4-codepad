@@ -1,0 +1,39 @@
+<h1>Button Set Example</h1>
+
+<p>
+    Creates multiple buttons without gaps.
+
+    <div>
+        <a href="http://jquery-ui.googlecode.com/svn/tags/1.6rc5/tests/static/icons.html" target="_blank">
+            Check list of jQueryUI icons
+        </a>
+    </div>
+</p>
+
+<?Example?>Example 1
+$bs = $page->add('ButtonSet');
+$test_button = $bs->addButton('Test');
+$alert_button = $bs->addButton('Alert');
+$alert_button->js('click')->univ()->alert('BINGOOO!');
+$icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
+<?/?>
+
+<?Example?>Example 2 vertical
+$bs = $page->add('ButtonSet')->setVertical();
+$test_button = $bs->addButton('Test');
+$alert_button = $bs->addButton('Alert');
+$alert_button->js('click')->univ()->alert('BINGOOO!');
+$icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
+<?/?>
+
+<?Example?>Example 3 Button with Menu (Split button dropdowns)
+$tb = $page->add('View_ButtonMenuButton')->set('Test');
+$menu = $tb->addButtonMenu()->setType('vertical');
+$menu->addMenuItem('open','Open...')
+    ->addMenuItem('save','Save')
+    ->sub()
+        ->addMenuItem('saveas','Save as...')
+    ->end()
+    ->addMenuItem('delete','Delete')
+;
+<?/?>
