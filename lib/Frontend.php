@@ -5,7 +5,7 @@ class Frontend extends ApiFrontend {
     
 	function init(){
 		parent::init();
-		$this->dbConnect();
+		//$this->dbConnect();
 
         $this->pathfinder->addLocation('./',array(
             'addons'=>array('atk4-addons','addons','ds-addons'),

@@ -1,1 +1,1 @@
-/var/www/ag/codepad/atk4/templates/js/ui.atk4_loader.js
+../../atk4/templates/js/ui.atk4_loader.js

@@ -1,1 +1,1 @@
-/var/www/ag/codepad/atk4/templates/js/ui.atk4_notify.js
+../../atk4/templates/js/ui.atk4_notify.js
