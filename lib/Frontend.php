@@ -47,10 +47,10 @@ class Frontend extends ApiFrontend {
 
         }
 
-        $page->template->eachTag('Code',function($a,$b) use($page){ $page->add('View_Code',null,$b)->set($a); });
-        $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a); });
-        $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('View_Example',null,$b)->set($a,true); });
-        $page->template->eachTag('ExecuteTrigger',function($a,$b) use($page){ $page->add('View_ExecuteTrigger',null,$b)->set($a,'trigger'); });
+        $page->template->eachTag('Code',function($a,$b) use($page){ $page->add('documenting/View_Code',null,$b)->set($a); });
+        $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set($a); });
+        $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set($a,true); });
+        $page->template->eachTag('ExecuteTrigger',function($a,$b) use($page){ $page->add('documenting/View_ExecuteTrigger',null,$b)->set($a,'trigger'); });
 
 
         if(!$this->tree && $this->template->hasTag('SubMenu')){

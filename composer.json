@@ -1,0 +1,10 @@
+{
+    "provide": {
+    	"atk4/atk4": "dev-master"
+    },
+    "require": {
+        "romaninsh/validation": "dev-master",
+        "agile55/ga": "dev-master",
+        "romaninsh/documenting": "dev-master"
+    }
+}
