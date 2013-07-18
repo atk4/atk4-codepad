@@ -8,3 +8,7 @@ distfiles
 .DS_Store
 atk4
 atk4-addons
+composer.lock
+composer.phar
+vendor
+ds-addons
