@@ -12,24 +12,74 @@
 
 Example 1
 <?Example?>
-$bs = $page->add('ButtonSet');
-$test_button = $bs->addButton('Test');
-$alert_button = $bs->addButton('Alert');
-$alert_button->js('click')->univ()->alert('BINGOOO!');
-$icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
+$buttons = $page->add('ButtonSet');
+$buttons->addButton('Test');
+$buttons->addButton('Alert')
+    ->js('click')
+    ->univ()
+    ->alert('BINGOOO!');
+$buttons->addButton('With Icon')
+    ->setIcon('ui-icon-star');
 <?/?>
 
 Example 2 vertical
 <?Example?>
-$bs = $page->add('ButtonSet',array('vertical'=>true));
-$test_button = $bs->addButton('Test');
-$alert_button = $bs->addButton('Alert');
-$alert_button->js('click')->univ()->alert('BINGOOO!');
-$icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
+$buttons = $page->add('ButtonSet',array('vertical'=>true));
+$buttons->addButton()->setNoText('ui-icon-star');
+$buttons->addButton()->setNoText('ui-icon-trash');
+$buttons->addButton()->setNoText('ui-icon-pencil');
 <?/?>
 
-Example 3 Button with Menu (Split button dropdown)
+<p>Drop buttons introduces a arrow at the end of the button, which is a visual
+que for a user that it will produce some popover. Anything can be inside that
+popover.</p>
+
 <?Example?>
+$button = $page->add('View_Button');
+$popover = $form = $button->addPopover(array('width'=>'500'));
+
+$popover->add('LoremIpsum',array('paragraphs'=>1,'words'=>50));
+
+$buttons = $popover->add('ButtonSet');
+
+$buttons->addButton('Alert')
+    ->js('click')
+    ->univ()
+    ->alert('BINGOOO!');
+
+$buttons->addButton('Close')
+    ->js('click', $popover->js()->dialog('close'));
+<?/?>
+
+<p>While adding rectangular things is fine like that, drop-down menus
+with submenus do not fit in this well. So there is a separate method:
+</p>
+
+<?Example?>
+$button = $page->add('View_Button');
+$form = $button->addSplitButton()->addPopover()->add('Form');
+$form->addClass('stacked');
+$form->addField('slider','volume');
+<?/?>
+
+<?Example?>
+$button = $page->add('View_Button');
+$menu = $button->addMenu();
+
+$menu->addMenuItem('one');
+$menu->addMenuItem('two');
+$sm = $menu->addSubMenu('submenu');
+$menu->addMenuItem('three');
+$menu->addMenuItem('four');
+
+$sm -> addMenuItem('half');
+$sm -> addMenuItem('quarter');
+<?/?>
+
+
+Example 3 Button with Menu (Split button dropdowns)
+<?Example?>
+/*
 $tb = $page->add('View_ButtonMenuButton')->set('Test');
 $menu = $tb->addButtonMenu()->setType('vertical');
 $menu->addMenuItem('open','Open...')
@@ -39,17 +89,5 @@ $menu->addMenuItem('open','Open...')
     ->end()
     ->addMenuItem('delete','Delete')
 ;
-<?/?>
-
-Example 3 Button with Menu (Split button dropup)
-<?Example?>
-$tb = $page->add('View_ButtonMenuButton',array('up'=>true))->set('Test');
-$menu = $tb->addButtonMenu()->setType('vertical');
-$menu->addMenuItem('open','Open...')
-    ->addMenuItem('save','Save')
-    ->sub()
-        ->addMenuItem('saveas','Save as...')
-    ->end()
-    ->addMenuItem('delete','Delete')
-;
+*/
 <?/?>
