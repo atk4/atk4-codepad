@@ -1,6 +1,7 @@
 <h2>Form Validation Examples</h2>
 
-<?Example?>example 1
+example 1
+<?Example?>
 $f=$page->add('Form');
 
 $f->addField('line','email')
@@ -11,7 +12,8 @@ $f->addField('line','email')
 $f->addSubmit();
 <?/?>
 
-<?Example?>example 2
+example 2
+<?Example?>
 $f=$page->add('Form');
 
 $f_email=$f->addField('line','email')
@@ -27,7 +29,8 @@ if($f->isSubmitted()){
 }
 <?/?>
 
-<?Example?>example 3
+example 3
+<?Example?>
 $f=$page->add('Form');
 
 $f_email=$f->addField('line','email')
@@ -43,7 +46,8 @@ $f_email->addHook('validate',function() use ($f_email){
 $f->addSubmit();
 <?/?>
 
-<?Example?>example 4
+example 4
+<?Example?>
 $f=$page->add('Form');
 
 // JavaScript-based validation

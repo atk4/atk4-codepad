@@ -10,7 +10,8 @@
     </div>
 </p>
 
-<?Example?>Example 1
+Example 1
+<?Example?>
 $bs = $page->add('ButtonSet');
 $test_button = $bs->addButton('Test');
 $alert_button = $bs->addButton('Alert');
@@ -18,7 +19,8 @@ $alert_button->js('click')->univ()->alert('BINGOOO!');
 $icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
 <?/?>
 
-<?Example?>Example 2 vertical
+Example 2 vertical
+<?Example?>
 $bs = $page->add('ButtonSet')->setVertical();
 $test_button = $bs->addButton('Test');
 $alert_button = $bs->addButton('Alert');
@@ -26,7 +28,8 @@ $alert_button->js('click')->univ()->alert('BINGOOO!');
 $icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
 <?/?>
 
-<?Example?>Example 3 Button with Menu (Split button dropdowns)
+Example 3 Button with Menu (Split button dropdowns)
+<?Example?>
 $tb = $page->add('View_ButtonMenuButton')->set('Test');
 $menu = $tb->addButtonMenu()->setType('vertical');
 $menu->addMenuItem('open','Open...')
