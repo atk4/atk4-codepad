@@ -21,16 +21,29 @@ $icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
 
 Example 2 vertical
 <?Example?>
-$bs = $page->add('ButtonSet')->setVertical();
+$bs = $page->add('ButtonSet',array('vertical'=>true));
 $test_button = $bs->addButton('Test');
 $alert_button = $bs->addButton('Alert');
 $alert_button->js('click')->univ()->alert('BINGOOO!');
 $icon_button = $bs->addButton('With Icon')->setIcon('ui-icon-star');
 <?/?>
 
-Example 3 Button with Menu (Split button dropdowns)
+Example 3 Button with Menu (Split button dropdown)
 <?Example?>
 $tb = $page->add('View_ButtonMenuButton')->set('Test');
+$menu = $tb->addButtonMenu()->setType('vertical');
+$menu->addMenuItem('open','Open...')
+    ->addMenuItem('save','Save')
+    ->sub()
+        ->addMenuItem('saveas','Save as...')
+    ->end()
+    ->addMenuItem('delete','Delete')
+;
+<?/?>
+
+Example 3 Button with Menu (Split button dropup)
+<?Example?>
+$tb = $page->add('View_ButtonMenuButton',array('up'=>true))->set('Test');
 $menu = $tb->addButtonMenu()->setType('vertical');
 $menu->addMenuItem('open','Open...')
     ->addMenuItem('save','Save')
