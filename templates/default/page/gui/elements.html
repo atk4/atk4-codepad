@@ -4,8 +4,24 @@ Example 1
 <?Example?>
 $form=$page->add('Form');
 $form->addField('Line','Simple input');
+$form->addSubmit('Save');
+<?/?>
+
+Example 2
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Password','Password input');
+<?/?>
+
+Example 3
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Checkbox','Simple checkbox');
+<?/?>
+
+Example 4
+<?Example?>
+$form=$page->add('Form');
 $form->addField('CheckboxList','producers','Producers')->setValueList(array(
     1=>'Mr John',
     2=>'Piter ',
@@ -15,7 +31,17 @@ $form->addField('CheckboxList','producers','Producers')->setValueList(array(
     6=>'Benjamin',
     7=>'Rhino',
     ));
+<?/?>
+
+Example 5
+<?Example?>
+$form=$page->add('Form');
 $form->addField('DatePicker','Date');
+<?/?>
+
+Example 6
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Dropdown','Names')->setValueList(array(
     1=>'Mr John',
     2=>'Piter ',
@@ -25,12 +51,40 @@ $form->addField('Dropdown','Names')->setValueList(array(
     6=>'Benjamin',
     7=>'Rhino',
     ));
+<?/?>
+
+Example 7
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Radio','sex')
     ->setValueList(array('m'=>'Male','f'=>'Female'));
-$form->addField('Slider','Volume');
+<?/?>
+
+Example 8
+<?Example?>
+$form=$page->add('Form');
+$element = $form->add('HtmlElement');
+$slider=$form->addField('Slider','sl','Slide Me');
+$slider->min=1;
+$slider->max=50;
+$slider->left=1;
+$slider->right=50;
+$s='#'.$slider->name.'_slider';
+$this->js(true)->_selector('#'.$slider->name)->bind('change',$element->js()->_enclose()->html(
+    $this->js()->_selector($s)->slider('value')
+    ));
+<?/?>
+
+Example 9
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Text','Description');
+<?/?>
+
+Example 10
+<?Example?>
+$form=$page->add('Form');
 $form->addField('Upload','File');
-$form->addSubmit('Save');
 <?/?>
 
 Example Tabs
