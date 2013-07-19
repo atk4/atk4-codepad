@@ -6,14 +6,16 @@
  * Time: 4:13 PM
  * To change this template use File | Settings | File Templates.
  */
-class page_gui extends Page {
+class page_mdpage extends Page {
     function init() {
         parent::init();
 
-        list($this->md_file,$junk)=explode('.',$_GET['gui']);
+        list($this->md_file,$junk)=explode('.',$_GET['args']);
 
-        if ($this->md_file == '') {
+        if ($this->md_file == '' && !isset($this->api->real_page)) {
             $this->md_file = 'index';
+        } else if (isset($this->api->real_page)) {
+            $this->md_file = $this->api->real_page;
         }
 
         $parser = new dflydev\markdown\MarkdownExtraParser();
@@ -37,10 +39,10 @@ class page_gui extends Page {
 
         $page=$this;
         $page->template->eachTag('Code',function($a,$b) use($page){
-            $page->add('romaninsh/documenting/View_Example',null,$b)->set($a,true);
+            $page->add('documenting/View_Example',null,$b)->set($a,true);
         });
         $page->template->eachTag('Example',function($a,$b) use($page){
-            $page->add('romaninsh/documenting/View_Example',null,$b)->set($a);
+            $page->add('documenting/View_Example',null,$b)->set($a);
         });
         $page->template->eachTag('Image',function($a,$b) use($page){
             list($file,$title)=explode(' ',$a,2);

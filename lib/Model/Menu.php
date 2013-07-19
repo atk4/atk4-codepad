@@ -72,14 +72,16 @@ class Model_Menu extends hierarchy\Model_Array {
                 'crud' => 'CRUD',
                 'ajax' => 'AJAX',
             ),
-            'Your Snippets' => array(
+            'your-snippets' => array(
                 'Your Snippets',
             ),
 
 
 
 
-            '-----' => array(),
+            'ols' => array(
+                ' ---> Old from here',
+            ),
 
             'gui'=>array(
                 'User Interface',

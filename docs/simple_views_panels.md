@@ -1,0 +1,1 @@
+(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-neptune/#basic-panels) - add('Frame'), etc View_Error, View_Info, Image frame, Lightbox (?)
