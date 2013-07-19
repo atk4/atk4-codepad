@@ -27,23 +27,57 @@ class Model_Menu extends hierarchy\Model_Array {
 
             'scaffolding' => array(
                 'Scaffolding',
+                'styles' => 'Styles',
+                'grid-system' => 'Grid System',
+                'responsive-design' => 'Responsive Design',
             ),
-            'styles' => array(
-                'Styles',
+            'simple_views' => array(
+                'Simple Views',
+                'panels' => 'Panels',
+                'framed-panel' => 'Framed Panel',
+                'buttons' => 'Buttons',
+                'icons' => 'Icons',
+                'labels-badges' => 'Labels + Badges',
+                'growl' => 'Growl',
+                'progress-bar' => 'Progress Bar',
+                'helpers' => 'Helpers',
+                'tooltips' => 'Tooltips',
+                'carusel' => 'Carusel',
+                'lightbox' => 'Lightbox',
+                'tooltip' => 'Tooltip',
             ),
-            'grid-system' => array(
-                'Grid System',
-                'columns'=>'Columns',
-                'add-class'=>'addClass (span5)',
+            'navigation' => array(
+                'Navigation',
+                'top-menu' => 'Top menu',
+                'vertical' => 'Vertical',
+                'contextual-menu' => 'Contextual menu',
+                'tabs' => 'Tabs',
+                'navbar' => 'Navbar (menu + jquery load)',
+                'breadcrumb' => 'Breadcrumb',
+                'paginator' => 'Paginator',
             ),
-            'grid-system' => array(
-                'Grid System',
-                'columns'=>'Columns',
-                'add-class'=>'addClass (span5)',
+            'interactive-views' => array(
+                'Interactive Views',
+                'dialog-and-frames' => 'Dialog and Frames',
+                'autocomplete' => 'Autocomplete',
+                'grid' => 'Grid',
+                'jqgrid' => 'jqGrid',
+                'form' => 'Form',
+                'form-plain' => 'Form/Plain',
+                'trees' => 'Trees',
+                'custom-ajax' => 'Custom AJAX',
             ),
-            'responsive-design' => array(
-                'Responsive Design',
+            'combined-example' => array(
+                'Combined Example',
+                'crud' => 'CRUD',
+                'ajax' => 'AJAX',
             ),
+            'Your Snippets' => array(
+                'Your Snippets',
+            ),
+
+
+
 
             '-----' => array(),
 
