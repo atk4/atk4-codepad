@@ -12,3 +12,6 @@ composer.lock
 composer.phar
 vendor
 ds-addons
+.buildpath
+.project
+.settings

@@ -1,0 +1,42 @@
+<h1>Elements Example</h1>
+
+Example 1
+<?Example?>
+$form=$page->add('Form');
+$form->addField('Line','Simple input');
+$form->addField('Password','Password input');
+$form->addField('Checkbox','Simple checkbox');
+$form->addField('CheckboxList','producers','Producers')->setValueList(array(
+    1=>'Mr John',
+    2=>'Piter ',
+    3=>'Michail Gershwin',
+    4=>'Bread and butter',
+    5=>'Alex',
+    6=>'Benjamin',
+    7=>'Rhino',
+    ));
+$form->addField('DatePicker','Date');
+$form->addField('Dropdown','Names')->setValueList(array(
+    1=>'Mr John',
+    2=>'Piter ',
+    3=>'Michail Gershwin',
+    4=>'Bread and butter',
+    5=>'Alex',
+    6=>'Benjamin',
+    7=>'Rhino',
+    ));
+$form->addField('Radio','sex')
+    ->setValueList(array('m'=>'Male','f'=>'Female'));
+$form->addField('Slider','Volume');
+$form->addField('Text','Description');
+$form->addField('Upload','File');
+$form->addSubmit('Save');
+<?/?>
+
+Example Tabs
+<?Example?>
+$tabs = $page->add('Tabs');
+$tabs->addTabUrl('./user','Users');
+$tabs->addTabUrl('./project','Project');
+<?/?>
+
