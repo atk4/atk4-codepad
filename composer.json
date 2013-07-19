@@ -5,6 +5,7 @@
     "require": {
         "romaninsh/validation": "dev-master",
         "agile55/ga": "dev-master",
-        "romaninsh/documenting": "dev-master"
+        "romaninsh/documenting": "dev-master",
+        "dflydev/markdown": "dev-master"
     }
 }

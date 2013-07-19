@@ -25,6 +25,28 @@ class Model_Menu extends hierarchy\Model_Array {
         $this->setSource($this->convertArray(array(
             'index'=>'About This Site',
 
+            'scaffolding' => array(
+                'Scaffolding',
+            ),
+            'styles' => array(
+                'Styles',
+            ),
+            'grid-system' => array(
+                'Grid System',
+                'columns'=>'Columns',
+                'add-class'=>'addClass (span5)',
+            ),
+            'grid-system' => array(
+                'Grid System',
+                'columns'=>'Columns',
+                'add-class'=>'addClass (span5)',
+            ),
+            'responsive-design' => array(
+                'Responsive Design',
+            ),
+
+            '-----' => array(),
+
             'gui'=>array(
                 'User Interface',
                 'form'=>'Forms',
