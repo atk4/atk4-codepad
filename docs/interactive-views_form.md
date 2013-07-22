@@ -88,7 +88,33 @@ The most convenient way to use form is to have it's fields populated from a Mode
     //$form->setModel('Employee');
     //$form->addSubmit();
 
+#### model 2
 
+    //$f = $page->add('Form');
+ 
+    // defining arary of fields to show and sequence order
+    //$f->setModel('Employee',array('name'));
+
+#### model 3
+
+    /*
+    $model = $page->add('Model_Employee');
+    $model->addCondition('salary','<=',3000);
+     
+    $f=$page->add('Form');
+     
+    $f->setModel($model,array('name','salary'));
+    $f->getElement('salary')->setFieldHint('Must not exceed 3000');
+    $f->addSubmit();
+     
+    $f->onSubmit(function($f){
+        try {
+            $f->update()->js()->univ()->successMessage('Saved with id='.$f->model->id)->execute();
+        }catch(Exception $e){
+            $f->js()->univ()->alert('Failed to add record')->execute();
+        }
+    });
+    */
 
 
 
