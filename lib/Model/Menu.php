@@ -41,10 +41,9 @@ class Model_Menu extends hierarchy\Model_Array {
                 'growl' => 'Growl',
                 'progress-bar' => 'Progress Bar',
                 'helpers' => 'Helpers',
-                'tooltips' => 'Tooltips',
                 'carusel' => 'Carusel',
                 'lightbox' => 'Lightbox',
-                'tooltip' => 'Tooltip',
+                'tooltips' => 'Tooltips',
             ),
             'navigation' => array(
                 'Navigation',
