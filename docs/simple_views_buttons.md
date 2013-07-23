@@ -25,6 +25,8 @@
 
 ### <a id="icons"></a>icons
 
+<a href="http://jquery-ui.googlecode.com/svn/tags/1.6rc5/tests/static/icons.html" target="_blank">More jQueryUI icons</a>
+
     $page->add('Button')->set('Icon Button')->setIcon('ui-icon-heart');
 
 ### <a id="sizes"></a>sizes

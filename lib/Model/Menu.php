@@ -64,6 +64,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 'jqgrid' => 'jqGrid',
                 'form' => 'Form',
                 'form-plain' => 'Form/Plain',
+                'form-fields' => 'Form fields',
                 'trees' => 'Trees',
                 'custom-ajax' => 'Custom AJAX',
             ),
