@@ -103,8 +103,15 @@
 
 ## Slider
 
-    $form = $page->add('Form');
-    $form->addField('Slider','slider');
+    $form   = $page->add('Form');
+    $value  = $form->addField('Line','value');
+    $slider = $form->addField('Slider','slider');
+    $slider->min = 10;
+    $slider->max = 100;
+    $slider->setLabels('Left','Right');
+    $slider->js('change',
+        $value->js()->val($slider->js()->val())
+    );
     $form->addSubmit('Submit');
     $form->onSubmit(function($form){
         $form->js()->univ()->alert(
