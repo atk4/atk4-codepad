@@ -6,7 +6,10 @@
     $form->addField('Line','name');
     $form->addSubmit('Reverse string');
     $form->onSubmit(function($form){
-        $form->js()->univ()->alert(strrev($form->get('name')))->execute();
+        $string = iconv('utf-8', 'utf-16le', $form->get('name'));
+        $string = strrev($string);
+        $string = iconv('utf-16be', 'utf-8', $string);
+        $form->js()->univ()->alert($string)->execute();
     });
 
 ## Password
@@ -125,9 +128,10 @@
     $form->addField('Text','text');
     $form->addSubmit('Revert Text');
     $form->onSubmit(function($form){
-        $form->getElement('text')->js()->val(
-            strrev($form->get('text'))
-        )->execute();
+        $string = iconv('utf-8', 'utf-16le', $form->get('text'));
+        $string = strrev($string);
+        $string = iconv('utf-16be', 'utf-8', $string);
+        $form->getElement('text')->js()->val($string)->execute();
     });
 
 
