@@ -119,6 +119,17 @@
         )->execute();
     });
 
+## Textarea
+
+    $form   = $page->add('Form');
+    $form->addField('Text','text');
+    $form->addSubmit('Revert Text');
+    $form->onSubmit(function($form){
+        $form->getElement('text')->js()->val(
+            strrev($form->get('text'))
+        )->execute();
+    });
+
 
 
 
