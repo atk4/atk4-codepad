@@ -127,6 +127,9 @@
     $form   = $page->add('Form');
     $form->addField('Text','text');
     $form->addSubmit('Revert Text');
+    $form->addButton('Set testing text')->js('click',
+        $form->getElement('text')->js()->val('А роза упала на лапу Азора')
+    );
     $form->onSubmit(function($form){
         $string = iconv('utf-8', 'utf-16le', $form->get('text'));
         $string = strrev($string);
