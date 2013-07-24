@@ -44,10 +44,10 @@ class page_mdpage extends Page {
 
         $page=$this;
         $page->template->eachTag('Code',function($a,$b) use($page){
-            $page->add('documenting/View_Example',null,$b)->set($a,true);
+            $page->add('documenting/View_Example',md5(microtime()),$b)->set($a,true);
         });
         $page->template->eachTag('Example',function($a,$b) use($page){
-            $page->add('documenting/View_Example',null,$b)->set(htmlspecialchars_decode($a));
+            $page->add('documenting/View_Example',md5(microtime()),$b)->set(htmlspecialchars_decode($a));
         });
         $page->template->eachTag('Image',function($a,$b) use($page){
             list($file,$title)=explode(' ',$a,2);
