@@ -1,10 +1,6 @@
 Progress Bar Examples
 ====
 
-
-    
-    Progress Bar 1
-
     $button=$page->add('Button')->set('Run Long Process');
 
     $dialog=$page->add('View');
