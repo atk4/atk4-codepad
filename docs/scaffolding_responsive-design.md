@@ -1,0 +1,1 @@
+(layout changes depending on screen resolution)

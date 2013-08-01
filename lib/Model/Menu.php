@@ -25,6 +25,64 @@ class Model_Menu extends hierarchy\Model_Array {
         $this->setSource($this->convertArray(array(
             'index'=>'About This Site',
 
+            'scaffolding' => array(
+                'Scaffolding',
+                'styles' => 'Styles',
+                'grid-system' => 'Grid System',
+                'responsive-design' => 'Responsive Design',
+            ),
+            'simple_views' => array(
+                'Simple Views',
+                'panels' => 'Panels',
+                'framed-panel' => 'Framed Panel',
+                'buttons' => 'Buttons',
+                'icons' => 'Icons',
+                'labels-badges' => 'Labels + Badges',
+                'growl' => 'Growl',
+                'progress-bar' => 'Progress Bar',
+                'helpers' => 'Helpers',
+                'carusel' => 'Carusel',
+                'lightbox' => 'Lightbox',
+                'tooltips' => 'Tooltips',
+            ),
+            'navigation' => array(
+                'Navigation',
+                'top-menu' => 'Top menu',
+                'vertical' => 'Vertical',
+                'contextual-menu' => 'Contextual menu',
+                'tabs' => 'Tabs',
+                'navbar' => 'Navbar (menu + jquery load)',
+                'breadcrumb' => 'Breadcrumb',
+                'paginator' => 'Paginator',
+            ),
+            'interactive-views' => array(
+                'Interactive Views',
+                'dialog-and-frames' => 'Dialog and Frames',
+                'autocomplete' => 'Autocomplete',
+                'grid' => 'Grid',
+                'jqgrid' => 'jqGrid',
+                'form' => 'Form',
+                'form-plain' => 'Form/Plain',
+                'form-fields' => 'Form fields',
+                'trees' => 'Trees',
+                'custom-ajax' => 'Custom AJAX',
+            ),
+            'combined-example' => array(
+                'Combined Example',
+                'crud' => 'CRUD',
+                'ajax' => 'AJAX',
+            ),
+            'your-snippets' => array(
+                'Your Snippets',
+            ),
+
+
+
+
+            'ols' => array(
+                ' ---> Old from here',
+            ),
+
             'gui'=>array(
                 'User Interface',
                 'form'=>'Forms',
