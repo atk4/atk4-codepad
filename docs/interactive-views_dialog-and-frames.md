@@ -5,6 +5,8 @@
 ### Action on close
 
 
+    $default_text = '---------------------';
+
     // add view which will be reloaded
     $v = $page->add('View')->setElement('h1');
 
@@ -12,7 +14,7 @@
     if ($_GET['text']) {
         $v->set('text is: '.$_GET['text']);
     } else {
-        $v->set('-------------------');
+        $v->set($default_text);
     }
     
     // reload action. We send new text as a get pagameter
@@ -30,3 +32,7 @@
                 'reload_view' => $v->name
             ))
         );
+
+    // this button just change text to default condition
+    $page->add('Button')->set('Set Default Text')
+        ->js('click',$v->js()->text($default_text));
