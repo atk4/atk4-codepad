@@ -4,7 +4,8 @@
     $v = $page->add('View','view_inside_frame');
     $v->js(true)->closest(".ui-dialog")->on("dialogbeforeclose",
         $page->js(null,'function(event, ui){
-                 alert("123");
+                 alert("Text will be changed now!");
+                 '. $page->js()->_selector('#'.$_GET['reload_view'])->trigger('reload') .';
              }
         ')
     );
