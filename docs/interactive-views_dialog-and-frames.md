@@ -15,14 +15,14 @@
         $v->set('-------------------');
     }
     
-    // reload action. Send new text as a get pagameter
+    // reload action. We send new text as a get pagameter
     $v->js('reload')->atk4_reload(
             $page->api->url(null,array(
                 'text'=>'This is text after reload','cut_object'=>$v->name
             ))
     );
 
-    // botton to open frame
+    // bottom to open frame
     $page->add('Button')
         ->set('Click me')
         ->js('click')->univ()->frameURL('Nothing here',
