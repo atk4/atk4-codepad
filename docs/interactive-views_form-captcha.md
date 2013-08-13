@@ -3,7 +3,7 @@
 There two captcha plugins for ATK4.
 
 ## x_captcha
-[x_captcha](https://github.com/rvadym/x_captcha)
+[github repo](https://github.com/rvadym/x_captcha)
 
 Don't forget to clone addon to your project first.
 
@@ -20,7 +20,7 @@ Don't forget to clone addon to your project first.
 
 
 ## reCAPTCHA (from Google)
-[x_recaptcha](https://github.com/rvadym/x_recaptcha)
+[github repo](https://github.com/rvadym/x_recaptcha)
 
 Don't forget to clone addon to your project first. <br>
 Use <strong>Recaptcha.reload()</strong> to reload captcha with no page reload.
