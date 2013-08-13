@@ -64,6 +64,7 @@ class Model_Menu extends hierarchy\Model_Array {
                 'form' => 'Form',
                 'form-plain' => 'Form/Plain',
                 'form-fields' => 'Form fields',
+                'form-captcha' => 'Form captcha',
                 'trees' => 'Trees',
                 'custom-ajax' => 'Custom AJAX',
             ),
