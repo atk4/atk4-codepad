@@ -2,7 +2,11 @@
 class Frontend extends ApiFrontend {
     public $example_cut;
     public $tree;
-    
+
+    function _beforeInit(){
+        $this->add('Controller_Compat42');
+        parent::_beforeInit();
+    }
 	function init(){
 		parent::init();
 		$this->dbConnect();

@@ -1,3 +1,7 @@
+hello
+
+
+
 <div id="<?$_name?>">
 <h1>Model Definition</h1>
 
@@ -88,3 +92,4 @@ $page->add('Grid')->setModel($m);
 
 
 </div>
+
