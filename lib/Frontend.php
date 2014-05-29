@@ -59,9 +59,13 @@ class Frontend extends ApiFrontend {
      * we need this just to see old examples
      */
     function initLayout(){
-        try {
-            parent::initLayout();
-        }catch(Exception_StopInit $e){}
+
+        if($this->atk_version=="4.3")$f=$this->add('Layout_Fluid');
+
+        parent::initLayout();
+
+        if(isset($f))$f->addMenu()->setModel('Menu');
+
         $page=$this->page_object;
 
         if(@$page->descr){
@@ -76,18 +80,19 @@ class Frontend extends ApiFrontend {
 
         }
 
-        if (!$this->api->code_executed) {
+        //if (!$this->api->code_executed) {
             $page->template->eachTag('Code',function($a,$b) use($page){ $page->add('View_Code',null,$b)->set($a); });
-            $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set($a); });
-            $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set($a,true); });
+            $page->template->eachTag('Example',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set("\n".htmlspecialchars_decode($a)); });
+            $page->template->eachTag('Silent',function($a,$b) use($page){ $page->add('documenting/View_Example',null,$b)->set("\n".$a,true); });
             $page->template->eachTag('ExecuteTrigger',function($a,$b) use($page){ $page->add('documenting/View_ExecuteTrigger',null,$b)->set($a,'trigger'); });
-        }
-
+        //}
 
         if(!$this->tree && $this->template->hasTag('SubMenu')){
             $tree=$this->add('TreeView',null,'SubMenu',array('submenu'));
             $tree->setModel('Menu');
         }
+
+
     }
     public $code_executed = false;
     function render(){
@@ -106,7 +111,7 @@ class Frontend extends ApiFrontend {
 
     }
     function defaultTemplate(){
-        if($_GET['cut'])return array('empty');else return array('shared');
+        if($_GET['cut'])return array('empty');else return parent::defaultTemplate();
     }
 
 }
